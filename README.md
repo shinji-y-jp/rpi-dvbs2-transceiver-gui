@@ -6,7 +6,7 @@ This project provides a GTK4 graphical user interface for starting and
 stopping a GNU Radio DVB-S2 software transmitter and receiver.
 
 The system has been developed and tested as a simple KISS
-,(Keep It Simple,Stupid) DATV transceiver using Raspberry Pi 5 and Pluto Plus.
+(Keep It Simple, Stupid) DATV transceiver using Raspberry Pi 5 and Pluto Plus.
 
 The DVB-S2 transmitter operates with Pilot ON.
 
@@ -33,7 +33,6 @@ Copyright (C) 2026 Shinji Yamazaki and Kazuichi Shinjoh
 ## 著作権
 
 Copyright (C) 2026 Shinji Yamazaki and Kazuichi Shinjoh
-
 
 ## Credits
 
@@ -87,6 +86,17 @@ hardware and software environments is required.
 Feedback, test reports and bug reports are welcome.
 We need the community's help to improve it.
 
+## 現在の状況
+
+これはコミュニティによる試験を目的とした予備リリースです。
+
+送受信機は作者の環境では動作していますが、異なるハードウェアおよび
+ソフトウェア環境での試験が必要です。
+
+フィードバック、試験報告、不具合報告を歓迎します。
+
+コミュニティの協力によって本プロジェクトを改善していきたいと考えています。
+
 ## DVB-S2 Transmission
 
 The DVB-S2 transmitter operates with Pilot ON.
@@ -99,40 +109,65 @@ DVB-S2送信機はPilot ONで動作します。
 
 Pilot OFF送信は本プロジェクトでは実装していません。
 
-
 ## Pilot OFF Reception
 
-Pilot ON is recommended for normal operation.
+Pilot ON is recommended for normal reception.
 
 Pilot OFF reception is supported, but frequency tuning is much more critical.
 
-In our tests, reception was possible with a frequency offset of several hundred Hz, but operation became unreliable as the offset increased. An offset of approximately 500 Hz was already close to the practical limit under the tested conditions.
+In our tests, reception was possible with a frequency offset of several hundred Hz,
+but operation became unreliable as the offset increased.
 
-For reliable Pilot OFF reception, the frequency offset should ideally be kept within a few tens of Hz.
+An offset of approximately 500 Hz was already close to the practical limit
+under the tested conditions.
+
+For reliable Pilot OFF reception, the frequency offset should ideally
+be kept within a few tens of Hz.
 
 Therefore:
 
-- Pilot ON: Recommended for normal and stable operation.
+- Pilot ON: Recommended for normal and stable reception.
 - Pilot OFF: Supported, but requires accurate frequency tuning.
 - For Pilot OFF, keeping the frequency offset within a few tens of Hz is recommended for reliable operation.
 
-Actual performance may vary depending on symbol rate, signal level, SDR hardware, oscillator accuracy, and other reception conditions.
+Actual performance may vary depending on symbol rate, signal level,
+SDR hardware, oscillator accuracy, and other reception conditions.
 
-## 現在の状況
+## Pilot OFF受信
 
-これはコミュニティによる試験を目的とした予備リリースです。
+通常の受信ではPilot ONを推奨します。
 
-受信機は作者の環境では動作していますが、異なるハードウェアおよび
-ソフトウェア環境での試験が必要です。
+Pilot OFF受信にも対応していますが、
+周波数調整はPilot ONよりもはるかに重要になります。
 
-フィードバック、試験報告、不具合報告を歓迎します。
+実験では数百Hz程度の周波数ずれでも受信できましたが、
+ずれが大きくなるにつれて動作は不安定になりました。
+
+試験条件では約500 Hzのずれは、
+すでに実用上の限界に近い状態でした。
+
+安定したPilot OFF受信のためには、
+周波数ずれを数十Hz以内に保つことを推奨します。
+
+したがって、
+
+- Pilot ON：通常の安定受信に推奨
+- Pilot OFF：対応しているが、正確な周波数調整が必要
+- Pilot OFFでは数十Hz以内の周波数ずれを推奨
+
+実際の性能は、シンボルレート、信号レベル、SDRハードウェア、
+発振器精度、およびその他の受信条件によって変化します。
 
 ## Main features
 
-- Simple GTK4 receiver GUI
+- Simple GTK4 transceiver GUI
 - Raspberry Pi 5 support
-- GNU Radio based DVB-S2 reception
-- PlutoSDR / Pluto+ support
+- GNU Radio based DVB-S2 transmission and reception
+- Pluto Plus support
+- Logitech C920 H.264 hardware encoder support
+- USB audio support
+- DVB-S2 transmission with Pilot ON
+- Pilot ON / Pilot OFF reception
 - Symbol rates:
   - 333 kSym/s
   - 1 MSym/s
@@ -150,10 +185,14 @@ Actual performance may vary depending on symbol rate, signal level, SDR hardware
 
 ## 主な機能
 
-- シンプルなGTK4受信GUI
+- シンプルなGTK4送受信GUI
 - Raspberry Pi 5対応
-- GNU RadioによるDVB-S2受信
-- PlutoSDR / Pluto+対応
+- GNU RadioによるDVB-S2送受信
+- Pluto Plus対応
+- Logitech C920 H.264ハードウェアエンコーダー対応
+- USBオーディオ対応
+- DVB-S2送信はPilot ON
+- Pilot ON / Pilot OFF受信
 - シンボルレート:
   - 333 kSym/s
   - 1 MSym/s
@@ -171,7 +210,7 @@ Actual performance may vary depending on symbol rate, signal level, SDR hardware
 
 ## Supported Hardware
 
-This project follows a KISS (Keep It Simple,Stupid) design philosophy.
+This project follows a KISS (Keep It Simple, Stupid) design philosophy.
 
 The officially supported and tested configuration is limited to:
 
@@ -193,7 +232,7 @@ and is not officially supported.
 
 ## 対応ハードウェア
 
-本プロジェクトはKISS（Keep It Simple,Stupid）の設計思想に基づいています。
+本プロジェクトはKISS（Keep It Simple, Stupid）の設計思想に基づいています。
 
 公式にサポートし、実機試験を行っている構成は以下に限定します。
 
@@ -213,11 +252,11 @@ and is not officially supported.
 その他のハードウェアでも動作する可能性はありますが、
 本プロジェクトの対象範囲外であり、公式にはサポートしません。
 
-
 ## Required software
 
 - Raspberry Pi OS 64-bit
 - GNU Radio
+- gr-dvbs2
 - gr-dvbs2rx
 - GTK4
 - FFmpeg / ffplay
@@ -227,6 +266,7 @@ and is not officially supported.
 
 - Raspberry Pi OS 64-bit
 - GNU Radio
+- gr-dvbs2
 - gr-dvbs2rx
 - GTK4
 - FFmpeg / ffplay
@@ -296,19 +336,26 @@ sudo make install
 sudo ldconfig
 ```
 
+### Clone the transceiver repository
+
+```bash
+cd ~/src
+
+git clone https://github.com/shinji-y-jp/rpi-dvbs2-transceiver-gui.git
+```
+
 ### Build and install gr-dvbs2rx
 
 ```bash
 cd ~/src
 
 git clone https://github.com/igorauad/gr-dvbs2rx.git
-git clone https://github.com/shinji-y-jp/rpi-dvbs2-receiver-gui.git
 
 cd ~/src/gr-dvbs2rx
 
 git clone https://github.com/google/cpu_features.git
 
-git apply ~/src/rpi-dvbs2-receiver-gui/gr-dvbs2rx_reset_fixes.patch
+git apply ~/src/rpi-dvbs2-transceiver-gui/gr-dvbs2rx_reset_fixes.patch
 
 # Fix Python binding header hash after applying the patch
 HEADER="include/gnuradio/dvbs2rx/symbol_sync_cc.h"
@@ -326,20 +373,10 @@ sudo make install
 sudo ldconfig
 ```
 
-### Clone the receiver repositories
+### Build the transceiver GUI
 
 ```bash
-
-cd ~/src
-
-git clone https://github.com/shinjiy5984-lgtm/dvbs2-lab.git
-
-```
-
-### Build the receiver GUI
-
-```bash
-cd ~/src/rpi-dvbs2-receiver-gui
+cd ~/src/rpi-dvbs2-transceiver-gui
 
 chmod +x *.py
 chmod +x *.sh
@@ -384,6 +421,12 @@ libpcap-dev \
 libgtk-4-dev \
 gnuradio \
 gnuradio-dev
+
+sudo apt install -y \
+libiio-dev \
+libiio-utils \
+python3-libiio \
+libad9361-dev
 ```
 
 ### gr-dvbs2 のビルドとインストール
@@ -408,6 +451,14 @@ sudo make install
 sudo ldconfig
 ```
 
+### 送受信機リポジトリの取得
+
+```bash
+cd ~/src
+
+git clone https://github.com/shinji-y-jp/rpi-dvbs2-transceiver-gui.git
+```
+
 ### gr-dvbs2rx のビルドとインストール
 
 ```bash
@@ -419,6 +470,14 @@ cd ~/src/gr-dvbs2rx
 
 git clone https://github.com/google/cpu_features.git
 
+git apply ~/src/rpi-dvbs2-transceiver-gui/gr-dvbs2rx_reset_fixes.patch
+
+# パッチ適用後にPython bindingのヘッダーハッシュを修正
+HEADER="include/gnuradio/dvbs2rx/symbol_sync_cc.h"
+BINDING="python/dvbs2rx/bindings/symbol_sync_cc_python.cc"
+HASH=$(md5sum "$HEADER" | awk '{print $1}')
+sed -i -E "s/BINDTOOL_HEADER_FILE_HASH\([0-9a-fA-F]+\)/BINDTOOL_HEADER_FILE_HASH(${HASH})/" "$BINDING"
+
 mkdir -p build
 cd build
 
@@ -429,20 +488,10 @@ sudo make install
 sudo ldconfig
 ```
 
-### 受信機リポジトリの取得
+### GUI送受信機のビルド
 
 ```bash
-cd ~/src
-
-git clone https://github.com/shinjiy5984-lgtm/dvbs2-lab.git
-
-git clone https://github.com/shinji-y-jp/rpi-dvbs2-receiver-gui.git
-```
-
-### GUI受信機のビルド
-
-```bash
-cd ~/src/rpi-dvbs2-receiver-gui
+cd ~/src/rpi-dvbs2-transceiver-gui
 
 chmod +x *.py
 chmod +x *.sh
@@ -453,85 +502,138 @@ make
 
 ## Files
 
-- `main4.c`  
-  GTK4 receiver GUI source code
+- `main4.c`
+  GTK4 transceiver GUI source code
 
-- `RF_UDP_dvbs2_rx.py`  
+- `RF_UDP_dvbs2_tx.grc`
+  GNU Radio Companion DVB-S2 transmitter flowgraph
+
+- `RF_UDP_dvbs2_rx.py`
   GNU Radio DVB-S2 receiver
 
-- `start_app.sh`  
+- `RF_UDP_my_dvbs2_rx2_pluto.grc`
+  GNU Radio Companion DVB-S2 receiver flowgraph for Pluto
+
+- `RF_FIFO_dvbs2_experiment.py`
+  DVB-S2 experimental transmitter flowgraph
+
+- `start_app.sh`
   Starts the GUI application
 
-- `start_rx.sh`  
+- `start_tx.sh`
+  Starts the transmitter
+
+- `stop_tx.sh`
+  Stops the transmitter
+
+- `start_rx.sh`
   Starts the receiver
 
-- `stop_rx.sh`  
+- `stop_rx.sh`
   Stops the receiver
 
-- `watchdog_rx.sh`  
+- `watchdog_rx.sh`
   Monitors receiver operation and restarts it when required
 
-- `udp_relay.py`  
+- `udp_relay.py`
   Relays the received UDP transport stream
 
-- `run_udp_hd_test.sh`  
-  Starts the 800x480 transmission, reception, UDP relay, and verification processes together
+- `run_udp_hd_test.sh`
+  Starts the transmission, reception, UDP relay, and verification processes used for testing
 
-- `check_stall.sh`  
-  Checks CPU usage of the processing threads and diagnoses whether `plsync_cc` has entered an infinite search state
+- `check_stall.sh`
+  Checks CPU usage of the processing threads and diagnoses whether `plsync_cc`
+  has entered an infinite search state
 
-- `stop_test.sh`  
+- `stop_test.sh`
   Stops all processes used for the test and removes temporary files
 
-- `dvbs2rx_rx_hier.grc`  
+- `dvbs2rx_rx_hier.grc`
   GNU Radio Companion hierarchical receiver flowgraph
 
-- `dvbs2_rx_epy_block_0.py`  
+- `dvbs2_rx_epy_block_0.py`
   Embedded Python block used by the GNU Radio receiver
 
-- `makefile`  
-  Builds the GTK4 GUI
+- `dvbs2_tx_rx_epy_block_0.py`
+  Embedded Python block used by the DVB-S2 transmit/receive system
+
+- `gr-dvbs2rx_reset_fixes.patch`
+  Receiver reset and reacquisition fixes for gr-dvbs2rx
+
+- `experiment.sh`
+  Experimental DVB-S2 operation script
+
+- `makefile`
+  Builds the GTK4 transceiver GUI
 
 ## ファイル
 
-- `main4.c`  
-  GTK4受信GUIのソースコード
+- `main4.c`
+  GTK4送受信GUIのソースコード
 
-- `RF_UDP_dvbs2_rx.py`  
+- `RF_UDP_dvbs2_tx.grc`
+  GNU Radio Companion DVB-S2送信フローグラフ
+
+- `RF_UDP_dvbs2_rx.py`
   GNU Radio DVB-S2受信機
 
-- `start_app.sh`  
+- `RF_UDP_my_dvbs2_rx2_pluto.grc`
+  Pluto用GNU Radio Companion DVB-S2受信フローグラフ
+
+- `RF_FIFO_dvbs2_experiment.py`
+  DVB-S2実験用送信フローグラフ
+
+- `start_app.sh`
   GUIアプリケーションを起動します
 
-- `start_rx.sh`  
+- `start_tx.sh`
+  送信機を起動します
+
+- `stop_tx.sh`
+  送信機を停止します
+
+- `start_rx.sh`
   受信機を起動します
 
-- `stop_rx.sh`  
+- `stop_rx.sh`
   受信機を停止します
 
-- `watchdog_rx.sh`  
+- `watchdog_rx.sh`
   受信動作を監視し、必要に応じて受信機を再起動します
 
-- `udp_relay.py`  
+- `udp_relay.py`
   受信したUDPトランスポートストリームを中継します
 
-- `run_udp_hd_test.sh`  
-  800x480の送信、受信、UDPリレー、および検証処理を一括して起動します
+- `run_udp_hd_test.sh`
+  試験用の送信、受信、UDPリレー、および検証処理を一括して起動します
 
-- `check_stall.sh`  
-  各処理スレッドのCPU使用率を確認し、`plsync_cc`が無限探索状態へ陥っていないか診断します
+- `check_stall.sh`
+  各処理スレッドのCPU使用率を確認し、
+  `plsync_cc`が無限探索状態へ陥っていないか診断します
 
-- `stop_test.sh`  
+- `stop_test.sh`
   試験に使用した全プロセスを停止し、一時ファイルを削除します
 
-- `dvbs2rx_rx_hier.grc`  
+- `dvbs2rx_rx_hier.grc`
   GNU Radio Companionの階層型受信フローグラフ
 
-- `dvbs2_rx_epy_block_0.py`  
+- `dvbs2_rx_epy_block_0.py`
   GNU Radio受信機で使用するEmbedded Python Block
 
-- `makefile`  
-  GTK4 GUIをビルドします## Build
+- `dvbs2_tx_rx_epy_block_0.py`
+  DVB-S2送受信システムで使用するEmbedded Python Block
+
+- `gr-dvbs2rx_reset_fixes.patch`
+  gr-dvbs2rxの受信再捕捉改善用パッチ
+
+- `experiment.sh`
+  DVB-S2実験用スクリプト
+
+- `makefile`
+  GTK4送受信GUIをビルドします
+
+## Build
 
 ```bash
 make
+```
