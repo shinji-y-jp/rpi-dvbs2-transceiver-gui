@@ -377,7 +377,7 @@ sudo ldconfig
 
 ```bash
 cd ~/src/rpi-dvbs2-transceiver-gui
-
+mkdir data
 chmod +x *.py
 chmod +x *.sh
 
@@ -636,4 +636,5 @@ make
 
 ```bash
 make
+./app
 ```
