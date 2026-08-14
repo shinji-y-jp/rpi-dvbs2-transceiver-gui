@@ -156,19 +156,50 @@ Actual performance may vary depending on symbol rate, signal level, SDR hardware
   - 0.25
   - 0.35
 
-## Required hardware
+## Supported Hardware
+
+This project follows a KISS (Keep It Simple,Stupid) design philosophy.
+
+The officially supported and tested configuration is limited to:
 
 - Raspberry Pi 5
-- PlutoSDR or compatible Pluto+
-- Display, mouse and keyboard
-- Suitable DVB-S2 test signal
+- Pluto Plus connected by USB
+- Logitech C920 with H.264 hardware encoder
+- The specific USB audio dongle tested by the developer
 
-## 必要なハードウェア
+Not supported:
+
+- Network-connected Pluto Plus
+- Other SDR hardware
+- Other webcams
+- Software H.264 encoding on Raspberry Pi 5
+- Other USB audio devices
+
+Other hardware may work, but it is outside the scope of this project
+and is not officially supported.
+
+## 対応ハードウェア
+
+本プロジェクトはKISS（Keep It Simple,Stupid）の設計思想に基づいています。
+
+公式にサポートし、実機試験を行っている構成は以下に限定します。
 
 - Raspberry Pi 5
-- PlutoSDRまたは互換Pluto+
-- ディスプレイ、マウス、キーボード
-- 適切なDVB-S2試験信号
+- USB接続のPluto Plus
+- H.264ハードウェアエンコーダー搭載Logitech C920
+- 開発者が実機試験した特定のUSBオーディオドングル
+
+以下はサポート対象外です。
+
+- ネットワーク接続のPluto Plus
+- その他のSDRハードウェア
+- その他のWebカメラ
+- Raspberry Pi 5によるH.264ソフトウェアエンコード
+- その他のUSBオーディオデバイス
+
+その他のハードウェアでも動作する可能性はありますが、
+本プロジェクトの対象範囲外であり、公式にはサポートしません。
+
 
 ## Required software
 
