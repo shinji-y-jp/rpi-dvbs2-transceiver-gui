@@ -87,6 +87,19 @@ hardware and software environments is required.
 Feedback, test reports and bug reports are welcome.
 We need the community's help to improve it.
 
+## DVB-S2 Transmission
+
+The DVB-S2 transmitter operates with Pilot ON.
+
+Pilot OFF transmission is not implemented in this project.
+
+## DVB-S2送信
+
+DVB-S2送信機はPilot ONで動作します。
+
+Pilot OFF送信は本プロジェクトでは実装していません。
+
+
 ## Pilot OFF Reception
 
 Pilot ON is recommended for normal operation.
