@@ -92,9 +92,9 @@
 	{
 	if (g_strcmp0(ad->freq_mhz, "2400") == 0) {
 	gtk_combo_box_set_active(GTK_COMBO_BOX(ad->cmb_freq), 0);
-	} else if (g_strcmp0(ad->freq_mhz, "438") == 0) {
+	} else if (g_strcmp0(ad->freq_mhz, "1255") == 0) {
 	gtk_combo_box_set_active(GTK_COMBO_BOX(ad->cmb_freq), 1);
-	} else if (g_strcmp0(ad->freq_mhz, "437") == 0) {
+	} else if (g_strcmp0(ad->freq_mhz, "437.014") == 0) {
 	gtk_combo_box_set_active(GTK_COMBO_BOX(ad->cmb_freq), 2);
 	} else {
 	gtk_combo_box_set_active(GTK_COMBO_BOX(ad->cmb_freq), 1);
@@ -185,45 +185,48 @@
 	* Command builders
 	* ========================================================= */
 	
-	static void launch_tx_command(AppData *ad)
-	{
-	 long long tx_hz = g_ascii_strtoll(ad->freq_mhz, NULL, 10) * 1000000LL;
-	 const char *ts_file = "test_1280x720_30fps_800k.ts";
+static void launch_tx_command(AppData *ad)
+{
+    double freq_mhz = g_ascii_strtod(ad->freq_mhz, NULL);
+    long long tx_hz = (long long)(freq_mhz * 1000000.0 + 0.5);
+
+    const char *ts_file = "test_1280x720_30fps_800k.ts";
+
+    if (g_strcmp0(ad->modulation, "QPSK1/4") == 0) {
+        ts_file = "out_800x480_av_mp2.ts";
+    }
+
+    gchar *cmd = g_strdup_printf(
+        "./start_tx.sh %lld %s %s %s",
+        tx_hz,
+        ad->modulation,
+        ad->symbol_rate,
+        ts_file
+    );
+
+    g_print("TX command: %s\n", cmd);
+    g_spawn_command_line_async(cmd, NULL);
+    g_free(cmd);
+}
+
 	
-	 if (g_strcmp0(ad->modulation, "QPSK1/4") == 0) {
-	     ts_file = "out_800x480_av_mp2.ts";
-	 }
 	
-	 gchar *cmd = g_strdup_printf(
-	     "./start_tx.sh %lld %s %s %s",
-	     tx_hz,
-	     ad->modulation,
-	     ad->symbol_rate,
-	     ts_file
-	 );
-	
-	 g_print("TX command: %s\n", cmd);
-	 g_spawn_command_line_async(cmd, NULL);
-	 g_free(cmd);
-	}
-	
-	
-	static void launch_rx_command(AppData *ad)
-	{
-	 long long rx_hz = g_ascii_strtoll(ad->freq_mhz, NULL, 10) * 1000000LL /*+ 22000LL RTL SDR */;
-	
-	 gchar *cmd = g_strdup_printf(
-	     "./start_rx.sh %lld %s %s",
-	     rx_hz,
-	     ad->modulation,
-	     ad->symbol_rate
-	 );
-	
-	 g_print("RX command: %s\n", cmd);
-	 g_spawn_command_line_async(cmd, NULL);
-	 g_free(cmd);
-	}
-	
+static void launch_rx_command(AppData *ad)
+{
+    double freq_mhz = g_ascii_strtod(ad->freq_mhz, NULL);
+    long long rx_hz = (long long)(freq_mhz * 1000000.0 + 0.5);
+
+    gchar *cmd = g_strdup_printf(
+        "./start_rx.sh %lld %s %s",
+        rx_hz,
+        ad->modulation,
+        ad->symbol_rate
+    );
+
+    g_print("RX command: %s\n", cmd);
+    g_spawn_command_line_async(cmd, NULL);
+    g_free(cmd);
+}	
 	
 	static void stop_tx(AppData *ad)
 	{
@@ -530,8 +533,8 @@
 	gtk_grid_set_column_spacing(GTK_GRID(grid), 10);
 	
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ad->cmb_freq), "2400");
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ad->cmb_freq), "438");
-	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ad->cmb_freq), "437");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ad->cmb_freq), "1255");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ad->cmb_freq), "437.014");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(ad->cmb_freq), 1);
 	
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ad->cmb_mode), "QPSK1/4");
