@@ -1,0 +1,211 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+### CONFIG
+FIFO="/tmp/in.ts"
+CAM="/dev/video0"
+FREQ="${1:-1295000000}"
+MODCOD="${2:-QPSK1/4}"
+SYMRATE="${3:-333000}"
+INPUT="${4:-out_800x480_av_mp2.ts}"
+SIZE="800x600"
+FPS="30"
+INPUT_FMT="yuyv422"
+
+VBIT="120k"
+ABIT="24k"
+SR="22050"
+MUXRATE="333k"
+
+TX_SECONDS=480
+SLEEP_SECONDS=60
+DVBS2="./RF_FIFO_dvbs2_experiment.py"
+
+cleanup_procs() {
+  pkill -f "RF_FIFO_dvbs2_experiment.py" 2>/dev/null || true
+  pkill -f "ffmpeg .*ume.JPG" 2>/dev/null || true
+  pkill -f "python3 -c.*open('/tmp/in.ts'" 2>/dev/null || true
+}
+
+ABIT="24k"
+SR="22050"
+
+case "${SYMRATE}" in
+  333000)
+    SPS=4
+    case "${MODCOD}" in
+      QPSK1/4)
+        VBIT="90k"
+        MUXRATE="165k"
+        ;;
+      QPSK1/2)
+        VBIT="220k"
+        MUXRATE="332k"
+        ;;
+      QPSK3/4)
+        VBIT="350k"
+        MUXRATE="498k"
+        ;;
+      8PSK3/5)
+        VBIT="430k"
+        MUXRATE="597k"
+        ;;
+      *)
+        echo "Unsupported MODCOD: ${MODCOD}"
+        exit 1
+        ;;
+    esac
+    ;;
+
+  1000000)
+    SPS=4
+    case "${MODCOD}" in
+      QPSK1/4)
+        VBIT="330k"
+        MUXRATE="493k"
+        ;;
+      QPSK1/2)
+        VBIT="700k"
+        MUXRATE="995k"
+        ;;
+      QPSK3/4)
+        VBIT="1050k"
+        MUXRATE="1496k"
+        ;;
+      8PSK3/5)
+        VBIT="1250k"
+        MUXRATE="1792k"
+        ;;
+      *)
+        echo "Unsupported MODCOD: ${MODCOD}"
+        exit 1
+        ;;
+    esac
+    ;;
+
+  1500000)
+    SPS=2
+    case "${MODCOD}" in
+      QPSK1/4)
+        VBIT="500k"
+        MUXRATE="740k"
+        ;;
+      QPSK1/2)
+        VBIT="1050k"
+        MUXRATE="1492k"
+        ;;
+      QPSK3/4)
+        VBIT="1600k"
+        MUXRATE="2244k"
+        ;;
+      8PSK3/5)
+        VBIT="1900k"
+        MUXRATE="2688k"
+        ;;
+      *)
+        echo "Unsupported MODCOD: ${MODCOD}"
+        exit 1
+        ;;
+    esac
+    ;;
+
+  2000000)
+    SPS=2
+    case "${MODCOD}" in
+      QPSK1/4)
+        VBIT="700k"
+        MUXRATE="986k"
+        ;;
+      QPSK1/2)
+        VBIT="1400k"
+        MUXRATE="1989k"
+        ;;
+      QPSK3/4)
+        VBIT="2150k"
+        MUXRATE="2992k"
+        ;;
+      8PSK3/5)
+        VBIT="2550k"
+        MUXRATE="3584k"
+        ;;
+      *)
+        echo "Unsupported MODCOD: ${MODCOD}"
+        exit 1
+        ;;
+    esac
+    ;;
+
+  *)
+    echo "Unsupported SYMRATE: ${SYMRATE}"
+    exit 1
+    ;;
+esac
+BUFSIZE="$(( ${VBIT%k} * 2 ))k"
+
+
+trap 'echo "TRAP: cleanup"; cleanup_procs; rm -f /tmp/in.ts; exit 0' INT TERM
+
+while true; do
+  echo "===== cycle start ====="
+
+  cleanup_procs
+  rm -f /tmp/in.ts
+  mkfifo /tmp/in.ts
+
+  echo "start dvbs2"
+
+  "${DVBS2}" \
+    -z "${FREQ}" \
+    -m "${MODCOD}" \
+    -s "${SYMRATE}" \
+    -o "${SPS}" \
+    > /tmp/dvbs2.log 2>&1 &
+  DVBS2_PID=$!
+
+  sleep 2
+
+  echo "start ffmpeg: ume.JPG -> ${FIFO}"
+
+  timeout "${TX_SECONDS}" ffmpeg \
+    -hide_banner \
+    -y \
+    -loglevel warning \
+    -loop 1 \
+    -framerate 10 \
+    -i ./ume.JPG \
+    -vf "scale=800:480,format=yuv420p" \
+    -c:v libx264 \
+    -preset ultrafast \
+    -tune zerolatency \
+    -profile:v baseline \
+    -level 3.0 \
+    -g 10 \
+    -keyint_min 10 \
+    -sc_threshold 0 \
+    -b:v "${VBIT}" \
+    -minrate "${VBIT}" \
+    -maxrate "${VBIT}" \
+    -bufsize "${BUFSIZE}" \
+    -muxrate "${MUXRATE}" \
+    -mpegts_flags resend_headers \
+    -muxdelay 0 \
+    -muxpreload 0 \
+    -f mpegts "${FIFO}" \
+    > /tmp/ffmpeg.log 2>&1 &
+  FFMPEG_PID=$!
+
+  wait "${FFMPEG_PID}" || true
+
+  echo "ffmpeg finished"
+
+  echo "--- ffmpeg log ---"
+  tail -n 20 /tmp/ffmpeg.log || true
+  echo "--- dvbs2 log ---"
+  tail -n 20 /tmp/dvbs2.log || true
+
+  cleanup_procs
+  rm -f /tmp/in.ts
+
+  echo "sleep 90s"
+  sleep 90
+done
