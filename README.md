@@ -635,6 +635,49 @@ make
 
 - `makefile`
   GTK4送受信GUIをビルドします
+  
+## Sample image transmission
+
+The files `ume.JPG` and `experiment.sh.ume` are included as a simple
+DVB-S2 transmission example.
+
+Rename:
+
+```bash
+experiment.sh.ume
+```
+
+to:
+
+```bash
+experiment.sh
+```
+
+and run the script.
+
+The transmitter will send `ume.JPG`, a photograph of Japanese plum blossoms.
+
+In Japan, plum blossoms are one of the beautiful signs that early spring
+is approaching.
+
+The photograph was taken by Shinji Yamazaki.
+
+## サンプル画像送信
+
+`ume.JPG` と `experiment.sh.ume` は、DVB-S2送信を試すための
+簡単なサンプルとして収録しています。
+
+`experiment.sh.ume` を
+
+```bash
+experiment.sh
+```
+
+へ名前変更してスクリプトを実行すると、`ume.JPG` が送信されます。
+
+`ume.JPG` は、日本で早春の訪れを告げる梅の花を撮影した写真です。
+
+写真は山崎慎慈が撮影しました。
 
 ## Build
 
