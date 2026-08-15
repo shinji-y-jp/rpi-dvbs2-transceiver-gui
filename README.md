@@ -636,10 +636,10 @@ make
 - `makefile`
   GTK4送受信GUIをビルドします
   
-## Sample image transmission
+## Sample Image Transmission
 
 The files `ume.JPG` and `experiment.sh.ume` are included as a simple
-DVB-S2 transmission example.
+DVB-S2 still-image transmission example.
 
 Rename:
 
@@ -655,29 +655,74 @@ experiment.sh
 
 and run the script.
 
-The transmitter will send `ume.JPG`, a photograph of Japanese plum blossoms.
+The transmitter will send the JPEG image named:
+
+```text
+ume.JPG
+```
+
+The included `ume.JPG` is a photograph of Japanese plum blossoms
+taken by Shinji Yamazaki.
 
 In Japan, plum blossoms are one of the beautiful signs that early spring
 is approaching.
 
-The photograph was taken by Shinji Yamazaki.
+### Using Your Own Image
+
+You can replace the sample photograph with your own JPEG image.
+
+Any JPEG image can be used as long as the file is named:
+
+```text
+ume.JPG
+```
+
+Simply rename your JPEG image to `ume.JPG`, place it in the same directory,
+and run `experiment.sh`.
+
+This provides a simple way to transmit your own still image using the
+DVB-S2 transmitter.
 
 ## サンプル画像送信
 
-`ume.JPG` と `experiment.sh.ume` は、DVB-S2送信を試すための
-簡単なサンプルとして収録しています。
+`ume.JPG` と `experiment.sh.ume` は、DVB-S2による静止画送信を
+試すための簡単なサンプルとして収録しています。
 
 `experiment.sh.ume` を
 
-```bash
+```text
 experiment.sh
 ```
 
-へ名前変更してスクリプトを実行すると、`ume.JPG` が送信されます。
+へ名前変更してスクリプトを実行すると、
 
-`ume.JPG` は、日本で早春の訪れを告げる梅の花を撮影した写真です。
+```text
+ume.JPG
+```
 
-写真は山崎慎慈が撮影しました。
+という名前のJPEG画像が送信されます。
+
+収録されている `ume.JPG` は、山崎慎慈が撮影した梅の花の写真です。
+
+日本では、梅の花は早春の訪れを告げる美しいものの一つとして
+古くから親しまれています。
+
+### 自分の画像を送信する場合
+
+サンプルの梅の写真を、自分で用意したJPEG画像へ置き換えることもできます。
+
+JPEG画像のファイル名を、
+
+```text
+ume.JPG
+```
+
+にしてください。
+
+自分のJPEG画像を `ume.JPG` へ名前変更し、同じディレクトリへ置いて
+`experiment.sh` を実行すれば、その画像を送信できます。
+
+これにより、自分の静止画をDVB-S2で簡単に送信できます。
 
 ## Build
 
