@@ -232,14 +232,20 @@ Pilot OFF受信にも対応していますが、
 
 ## Supported Hardware
 
-This project follows a KISS (Keep It Simple, Stupid) design philosophy.
+This project officially supports and has been tested with the following hardware configuration:
 
-The officially supported and tested configuration is limited to:
+- Raspberry Pi 5 2GB
+- Raspberry Pi OS 64-bit Desktop (not Lite)
+- Official Raspberry Pi 7-inch touchscreen
+- Pluto Plus connected via USB only
+- Logitech C920 equipped with the H.264 hardware encoder
+- USB audio dongle already supported by Langstone
 
-- Raspberry Pi 5
-- Pluto Plus connected by USB
-- Logitech C920 with H.264 hardware encoder
-- The specific USB audio dongle tested by the developer
+Other hardware configurations are not officially supported.
+
+They may work, but they have not been tested as part of this appliance.
+
+Users are welcome to experiment with other hardware configurations and report their results.
 
 Not supported:
 
