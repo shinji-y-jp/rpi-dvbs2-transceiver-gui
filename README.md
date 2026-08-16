@@ -14,6 +14,24 @@ The system has been developed and tested as a simple KISS
 
 The DVB-S2 transmitter operates with Pilot ON.
 
+## How this project started
+
+This project did not start with a plan to build a complete DVB-S2 transceiver.
+
+The original inspiration came from the DVB-S2 loopback test provided by Igor's gr-dvbs2rx project.
+
+The initial idea was very simple:
+
+> "What happens if the transmitter and receiver in the loopback test are separated and connected through a real RF path?"
+
+That experiment worked.
+
+From there, the system gradually evolved through real RF testing, live video transmission, receiver stability testing, and finally a simple GTK4 user interface.
+
+The DVB-S2 modulation and demodulation technology itself comes from the excellent existing open-source projects on which this system is built.
+
+The purpose of this project is not to reinvent DVB-S2, but to integrate those components into a simple and practical Raspberry Pi 5 DVB-S2 transceiver.
+
 ## License
 
 This project is licensed under the GNU General Public License
