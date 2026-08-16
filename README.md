@@ -750,3 +750,316 @@ ume.JPG
 make
 ./app
 ```
+
+# Raspberry Pi 5 KISS DVB-S2 Transceiver
+
+A simple DVB-S2 transmitter and receiver for Raspberry Pi 5 using GNU Radio and Pluto Plus.
+
+This project is intentionally designed around the KISS principle:
+
+> Keep It Simple.
+
+The goal is not to support every SDR, webcam, audio device, operating system, or possible configuration.
+
+The goal is to provide a simple and reproducible DVB-S2 transceiver using a known working hardware and software configuration.
+
+---
+
+# How this project started
+
+This project did not start with a plan to build a complete DVB-S2 transceiver.
+
+The original inspiration came from the DVB-S2 loopback test provided by Igor's gr-dvbs2rx project.
+
+The initial idea was very simple:
+
+> "What happens if the transmitter and receiver in the loopback test are separated and connected through a real RF path?"
+
+That experiment worked.
+
+From there, the system gradually evolved through real RF testing, live video transmission, receiver stability testing, and finally a simple GTK4 user interface.
+
+The DVB-S2 modulation and demodulation technology itself comes from the excellent existing open-source projects on which this system is built.
+
+The purpose of this project is not to reinvent DVB-S2, but to integrate those components into a simple and practical Raspberry Pi 5 DVB-S2 transceiver.
+
+---
+
+# Supported Hardware
+
+This project officially supports and has been tested with the following hardware configuration:
+
+- Raspberry Pi 5 2GB
+- Raspberry Pi OS 64-bit Desktop (not Lite)
+- Official Raspberry Pi 7-inch touchscreen
+- USB mouse
+- Pluto Plus connected via USB only
+- Logitech C920 equipped with the H.264 hardware encoder
+- USB audio dongle already supported by Langstone
+- Wired Ethernet connection
+
+Other hardware configurations are not officially supported.
+
+They may work, but they have not been tested as part of this appliance.
+
+Users are welcome to experiment with other hardware configurations and report their results.
+
+---
+
+# Not Supported
+
+The following configurations are not officially supported:
+
+- Raspberry Pi OS Lite
+- Network-connected Pluto Plus
+- RTL-SDR
+- Other SDR hardware
+- Other webcams
+- Logitech C920 without the H.264 hardware encoder
+- Raspberry Pi 5 software H.264 encoding
+- Other USB audio devices
+- Wi-Fi operation
+
+If you wish to use another configuration, please feel free to modify the source code and test it yourself.
+
+---
+
+# Reference DVB-S2 Configuration
+
+The recommended default configuration is:
+
+```text
+Symbol Rate : 333 kSym/s
+MODCOD      : QPSK 1/2
+Pilot       : ON
+Roll-off    : 0.20
+RX Watchdog : ON
+```
+
+```bash
+# ============================================================
+# DVB-S2 KISS Appliance Setup
+# Raspberry Pi 5 2GB
+# Raspberry Pi OS 64-bit Desktop
+# Wired LAN
+# ============================================================
+
+
+# ------------------------------------------------------------
+# 1. Update system
+# ------------------------------------------------------------
+
+sudo apt update
+sudo apt upgrade -y
+
+
+# ------------------------------------------------------------
+# 2. Desktop Auto Login
+# ------------------------------------------------------------
+
+sudo raspi-config
+
+# Select:
+#
+# System Options
+#   -> Boot / Auto Login
+#   -> Desktop Autologin
+#
+# Exit raspi-config without rebooting yet.
+
+
+# ------------------------------------------------------------
+# 3. Check DVB-S2 application
+# ------------------------------------------------------------
+
+cd ~/src/rpi-dvbs2-transceiver-gui
+pwd
+ls -l
+
+
+# ------------------------------------------------------------
+# 4. Create appliance startup script
+# ------------------------------------------------------------
+
+cat > ~/start-dvbs2-appliance.sh <<'EOF'
+#!/bin/bash
+
+sleep 5
+
+cd /home/pi/src/rpi-dvbs2-transceiver-gui || exit 1
+
+./app
+EOF
+
+chmod +x ~/start-dvbs2-appliance.sh
+
+
+# ------------------------------------------------------------
+# 5. Create Desktop autostart directory
+# ------------------------------------------------------------
+
+mkdir -p ~/.config/autostart
+
+
+# ------------------------------------------------------------
+# 6. Register DVB-S2 KISS UI for automatic startup
+# ------------------------------------------------------------
+
+cat > ~/.config/autostart/dvbs2-appliance.desktop <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=DVB-S2 KISS UI
+Exec=/home/pi/start-dvbs2-appliance.sh
+Terminal=false
+X-GNOME-Autostart-enabled=true
+EOF
+
+
+# ------------------------------------------------------------
+# 7. Check autostart configuration
+# ------------------------------------------------------------
+
+cat ~/start-dvbs2-appliance.sh
+
+cat ~/.config/autostart/dvbs2-appliance.desktop
+
+
+# ------------------------------------------------------------
+# 8. Disable Wi-Fi
+# ------------------------------------------------------------
+
+sudo rfkill block wifi
+
+
+# ------------------------------------------------------------
+# 9. Disable Bluetooth if not required
+# ------------------------------------------------------------
+
+sudo rfkill block bluetooth
+
+
+# ------------------------------------------------------------
+# 10. Check wired LAN
+# ------------------------------------------------------------
+
+ip addr show
+
+ip route
+
+
+# ------------------------------------------------------------
+# 11. Check Pluto Plus USB
+# ------------------------------------------------------------
+
+iio_info -s
+
+
+# ------------------------------------------------------------
+# 12. Check Logitech C920
+# ------------------------------------------------------------
+
+v4l2-ctl --list-devices
+
+
+# ------------------------------------------------------------
+# 13. Check USB audio
+# ------------------------------------------------------------
+
+aplay -l
+
+arecord -l
+
+
+# ------------------------------------------------------------
+# 14. Reboot and test appliance startup
+# ------------------------------------------------------------
+
+sudo reboot
+
+
+# ============================================================
+# AFTER REBOOT
+#
+# Confirm:
+#
+# Desktop Auto Login
+# DVB-S2 KISS UI Auto Start
+# Pluto Plus USB
+# C920
+# USB Audio
+# Wired LAN
+#
+# Test:
+#
+# 333 kSym/s
+# QPSK 1/2
+# Pilot ON
+# Watchdog ON
+#
+# TX/RX
+# ============================================================
+
+
+# ------------------------------------------------------------
+# 15. FINAL CLEANUP
+#
+# Run ONLY after all appliance tests have passed.
+# ------------------------------------------------------------
+
+
+# Clear shell history
+
+history -c
+rm -f ~/.bash_history
+
+
+# Clean APT cache
+
+sudo apt clean
+
+
+# Clean user cache
+
+rm -rf ~/.cache/*
+
+
+# ------------------------------------------------------------
+# 16. Remove SSH host keys from distribution image
+# ------------------------------------------------------------
+
+sudo rm -f /etc/ssh/ssh_host_*
+
+
+# ------------------------------------------------------------
+# 17. Reset machine-id
+# ------------------------------------------------------------
+
+sudo truncate -s 0 /etc/machine-id
+
+sudo rm -f /var/lib/dbus/machine-id
+
+sudo ln -s /etc/machine-id /var/lib/dbus/machine-id
+
+
+# ------------------------------------------------------------
+# 18. Check disk usage
+# ------------------------------------------------------------
+
+df -h
+
+
+# ------------------------------------------------------------
+# 19. Shutdown Golden Master
+# ------------------------------------------------------------
+
+sudo poweroff
+
+
+# ============================================================
+# DO NOT BOOT THIS SD CARD AGAIN BEFORE CREATING THE IMAGE.
+#
+# Remove SD card after shutdown.
+# Create the distribution image from this SD card.
+# ============================================================
+```
+
