@@ -1,8 +1,3 @@
-<img width="1920" height="1080" alt="20260814_20h09m28s_grim" src="https://github.com/user-attachments/assets/2146115b-6237-4a7d-bf6d-974d6d3b3963" />
-<img width="1920" height="1080" alt="20260814_20h09m35s_grim" src="https://github.com/user-attachments/assets/bde8def7-9e16-415a-9971-fd486c088190" />
-
-
-
 # Raspberry Pi DVB-S2 Transceiver GUI
 
 A simple DVB-S2 transceiver application for Raspberry Pi 5.
@@ -248,7 +243,7 @@ They may work, but they have not been tested as part of this appliance.
 
 Users are welcome to experiment with other hardware configurations and report their results.
 
-Not supported:
+## Not supported:
 
 - Network-connected Pluto Plus
 - Other SDR hardware
