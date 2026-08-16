@@ -1,5 +1,6 @@
-<img width="1920" height="1080" alt="20260814_20h09m28s_grim" src="https://github.com/user-attachments/assets/7e665f67-e65b-48dd-86e4-11358da69252" />
-<img width="1920" height="1080" alt="20260814_20h09m35s_grim" src="https://github.com/user-attachments/assets/928fff7c-232d-4f91-8e95-82b05bba7408" />
+<img width="1920" height="1080" alt="20260814_20h09m28s_grim" src="https://github.com/user-attachments/assets/2146115b-6237-4a7d-bf6d-974d6d3b3963" />
+<img width="1920" height="1080" alt="20260814_20h09m35s_grim" src="https://github.com/user-attachments/assets/bde8def7-9e16-415a-9971-fd486c088190" />
+
 
 
 # Raspberry Pi DVB-S2 Transceiver GUI
