@@ -1,3 +1,9 @@
+<img width="2016" height="1512" alt="image0" src="https://github.com/user-attachments/assets/864aca31-a384-4e7e-9be1-9417f6874f19" />
+<img width="2016" height="1512" alt="image1" src="https://github.com/user-attachments/assets/58a75ec0-8218-4421-962d-c2835d27f54d" />
+<img width="2016" height="1512" alt="image2" src="https://github.com/user-attachments/assets/08a83eaa-7ef0-4860-8dc4-a91e1f4d70ba" />
+
+
+
 # Raspberry Pi DVB-S2 Transceiver GUI
 
 A simple DVB-S2 transceiver application for Raspberry Pi 5.
