@@ -1,4 +1,5 @@
-<img width="2720" height="1080" alt="デモ" src="https://github.com/user-attachments/assets/41a441ac-5a5b-4586-9eca-07a77071f626" />
+<img width="2720" height="1080" alt="20260821_07h47m46s_grim" src="https://github.com/user-attachments/assets/fdcab640-5e55-4708-9a29-28ccea2d7b8e" />
+
 
 
 # Raspberry Pi 5 KISS DVB-S2 Transceiver
