@@ -1,26 +1,28 @@
-<img width="2016" height="1512" alt="image0" src="https://github.com/user-attachments/assets/864aca31-a384-4e7e-9be1-9417f6874f19" />
-<img width="2016" height="1512" alt="image1" src="https://github.com/user-attachments/assets/58a75ec0-8218-4421-962d-c2835d27f54d" />
-<img width="2016" height="1512" alt="image2" src="https://github.com/user-attachments/assets/08a83eaa-7ef0-4860-8dc4-a91e1f4d70ba" />
+# Raspberry Pi 5 KISS DVB-S2 Transceiver
 
+A simple DVB-S2 transmitter and receiver for Raspberry Pi 5 using GNU Radio and Pluto Plus.
 
+This project provides a GTK4 graphical user interface for starting and stopping a GNU Radio based DVB-S2 software transmitter and receiver.
 
-# Raspberry Pi DVB-S2 Transceiver GUI
+The system has been developed and tested as a simple KISS:
 
-A simple DVB-S2 transceiver application for Raspberry Pi 5.
+> Keep It Simple.
 
-This project provides a GTK4 graphical user interface for starting and
-stopping a GNU Radio DVB-S2 software transmitter and receiver.
+DATV transceiver using Raspberry Pi 5 and Pluto Plus.
 
-The system has been developed and tested as a simple KISS
-(Keep It Simple, Stupid) DATV transceiver using Raspberry Pi 5 and Pluto Plus.
+The goal is not to support every SDR, webcam, audio device, operating system, or possible configuration.
 
-The DVB-S2 transmitter operates with Pilot ON.
+The goal is to provide a simple and reproducible DVB-S2 transceiver using a known working hardware and software configuration.
+
+The DVB-S2 transmitter operates with **Pilot ON**.
+
+---
 
 ## How this project started
 
 This project did not start with a plan to build a complete DVB-S2 transceiver.
 
-The original inspiration came from the DVB-S2 loopback test provided by Igor's gr-dvbs2rx project.
+The original inspiration came from the DVB-S2 loopback test provided by Igor's `gr-dvbs2rx` project.
 
 The initial idea was very simple:
 
@@ -28,29 +30,43 @@ The initial idea was very simple:
 
 That experiment worked.
 
-From there, the system gradually evolved through real RF testing, live video transmission, receiver stability testing, and finally a simple GTK4 user interface.
+From there, the system gradually evolved through:
+
+- real RF testing
+- live video transmission
+- DVB-S2 receiver testing
+- receiver stability investigation
+- receiver reacquisition improvements
+- watchdog implementation
+- Raspberry Pi 5 integration
+- Pluto Plus integration
+- GTK4 GUI development
+- appliance-style operation
 
 The DVB-S2 modulation and demodulation technology itself comes from the excellent existing open-source projects on which this system is built.
 
-The purpose of this project is not to reinvent DVB-S2, but to integrate those components into a simple and practical Raspberry Pi 5 DVB-S2 transceiver.
+The purpose of this project is not to reinvent DVB-S2.
 
-## License
-
-This project is licensed under the GNU General Public License
-version 3 or any later version.
-
-See the `LICENSE` file for the complete license text.
+Its purpose is to integrate existing open-source DVB-S2 technology into a simple and practical Raspberry Pi 5 DATV transceiver.
 
 ---
 
+# License
+
+This project is licensed under the GNU General Public License version 3 or any later version.
+
+See the `LICENSE` file for the complete license text.
+
 ## ライセンス
 
-本プロジェクトは、GNU General Public Licenseバージョン3、
+本プロジェクトはGNU General Public Licenseバージョン3、
 またはそれ以降のバージョンの下で提供されます。
 
-ライセンスの全文については、`LICENSE` ファイルを参照してください。
+ライセンスの全文については `LICENSE` ファイルを参照してください。
 
-## Copyright
+---
+
+# Copyright
 
 Copyright (C) 2026 Shinji Yamazaki and Kazuichi Shinjoh
 
@@ -58,111 +74,172 @@ Copyright (C) 2026 Shinji Yamazaki and Kazuichi Shinjoh
 
 Copyright (C) 2026 Shinji Yamazaki and Kazuichi Shinjoh
 
-## Credits
+---
 
-- **Shinji Yamazaki**
-  - Original project concept
-  - System architecture
-  - Hardware testing
-  - DVB-S2 transmission and reception experiments
-  - Raspberry Pi 5 and Pluto Plus integration
-  - Project coordination and release preparation
+# Credits
 
-- **Kazuichi Shinjoh**
-  - Source-code analysis
-  - Receiver stabilization
-  - Development and improvement of operational scripts
-  - Watchdog and automatic receiver restart implementation
-  - GTK4 GUI implementation and related integration work
-  - Technical support for preparing the transceiver as a standalone application
+## Shinji Yamazaki
+
+- Original project concept
+- System architecture and design decisions
+- Hardware testing
+- DVB-S2 transmission and reception experiments
+- Real RF testing
+- Raspberry Pi 5 and Pluto Plus integration
+- Live video transmission experiments
+- Low-cost webcam software H.264 encoding experiments
+- Audio transmission experiments
+- Project coordination
+- Release preparation
+
+## Kazuichi Shinjoh
+
+- Source-code analysis
+- Receiver stabilization
+- Receiver reacquisition improvements
+- Development and improvement of operational scripts
+- Watchdog and automatic receiver restart implementation
+- GTK4 GUI implementation
+- Integration work
+- Technical support for preparing the transceiver as a standalone application
 
 This project was made possible through the joint technical work of
 Shinji Yamazaki and Kazuichi Shinjoh.
 
 ## クレジット
 
-- **山崎 慎慈**
-  - プロジェクトの原案及び方式決定
-  - システム構成
-  - 実機試験
-  - DVB-S2送受信実験
-  - Raspberry Pi 5およびPluto Plusの統合
-  - プロジェクト調整および公開準備
+### 山崎 慎慈
 
-- **真城 和一氏**
-  - ソースコード解析
-  - 受信機の安定化
-  - 運用スクリプトの開発および改良
-  - watchdogと受信機自動再起動機能の実装
-  - GTK4 GUIの実装および関連する統合作業
-  - スタンドアロン送受信機として公開するための技術支援
+- プロジェクトの原案および方式決定
+- システム構成
+- 実機試験
+- DVB-S2送受信実験
+- 実RF試験
+- Raspberry Pi 5およびPluto Plusの統合
+- ライブ映像送信実験
+- 安価なWebカメラを使用したソフトウェアH.264エンコード実験
+- 音声送信実験
+- プロジェクト調整
+- 公開準備
+
+### 真城 和一氏
+
+- ソースコード解析
+- 受信機の安定化
+- 受信再捕捉処理の改善
+- 運用スクリプトの開発および改良
+- watchdogと受信機自動再起動機能の実装
+- GTK4 GUIの実装
+- 関連する統合作業
+- スタンドアロン送受信機として公開するための技術支援
 
 本プロジェクトは、山崎慎慈と真城和一氏による共同技術作業によって
 実現しました。
 
-## Current status
+---
 
-This is a preliminary release for community testing.
+# Current Status
 
-The transceiver works on the author's system, but testing on different
-hardware and software environments is required.
+This is a **preliminary release for community testing**.
 
-Feedback, test reports and bug reports are welcome.
-We need the community's help to improve it.
+The transceiver has been demonstrated on the developers' test systems,
+but additional testing on different installations is required.
+
+Feedback, test reports, and bug reports are welcome.
+
+Community testing will help improve the project.
 
 ## 現在の状況
 
-これはコミュニティによる試験を目的とした予備リリースです。
+これはコミュニティによる試験を目的とした**予備リリース**です。
 
-送受信機は作者の環境では動作していますが、異なるハードウェアおよび
-ソフトウェア環境での試験が必要です。
+開発者の試験環境では送受信動作を確認していますが、
+異なるインストール環境での追加試験が必要です。
 
 フィードバック、試験報告、不具合報告を歓迎します。
 
-コミュニティの協力によって本プロジェクトを改善していきたいと考えています。
+コミュニティによる実機試験が、本プロジェクトの改善につながります。
 
-## DVB-S2 Transmission
+---
 
-The DVB-S2 transmitter operates with Pilot ON.
+# Design Policy
+
+This project follows the KISS principle.
+
+The officially supported configuration is intentionally limited.
+
+A configuration may be technically possible and may even have been experimentally demonstrated without becoming part of the officially supported appliance configuration.
+
+This distinction is important:
+
+- **Officially supported** means part of the defined KISS appliance configuration.
+- **Experimentally verified** means demonstrated in real operation, but not part of the officially supported appliance configuration.
+- **Not tested** means no claim of operation is made by this project.
+
+---
+
+# DVB-S2 Transmission
+
+The DVB-S2 transmitter operates with:
+
+> **Pilot ON**
 
 Pilot OFF transmission is not implemented in this project.
 
 ## DVB-S2送信
 
-DVB-S2送信機はPilot ONで動作します。
+DVB-S2送信機は、
+
+> **Pilot ON**
+
+で動作します。
 
 Pilot OFF送信は本プロジェクトでは実装していません。
 
+---
+
+# DVB-S2 Reception
+
+The receiver supports both:
+
+- Pilot ON
+- Pilot OFF
+
+Pilot ON is recommended for normal operation.
+
 ## Pilot OFF Reception
 
-Pilot ON is recommended for normal reception.
+Pilot OFF reception is supported, but frequency tuning is considerably more critical than with Pilot ON.
 
-Pilot OFF reception is supported, but frequency tuning is much more critical.
+In our tests, reception was possible with a frequency offset of several hundred Hz, but operation became increasingly unreliable as the offset increased.
 
-In our tests, reception was possible with a frequency offset of several hundred Hz,
-but operation became unreliable as the offset increased.
+Under the tested conditions, an offset of approximately 500 Hz was already close to the practical limit.
 
-An offset of approximately 500 Hz was already close to the practical limit
-under the tested conditions.
-
-For reliable Pilot OFF reception, the frequency offset should ideally
-be kept within a few tens of Hz.
+For reliable Pilot OFF reception, the frequency offset should ideally be kept within a few tens of Hz.
 
 Therefore:
 
-- Pilot ON: Recommended for normal and stable reception.
-- Pilot OFF: Supported, but requires accurate frequency tuning.
-- For Pilot OFF, keeping the frequency offset within a few tens of Hz is recommended for reliable operation.
+- **Pilot ON:** Recommended for normal and stable reception.
+- **Pilot OFF:** Supported, but requires accurate frequency tuning.
+- **Pilot OFF reliable operation:** Keeping the frequency offset within a few tens of Hz is recommended.
 
-Actual performance may vary depending on symbol rate, signal level,
-SDR hardware, oscillator accuracy, and other reception conditions.
+Actual performance may vary depending on:
+
+- symbol rate
+- MODCOD
+- signal level
+- SDR hardware
+- oscillator accuracy
+- frequency stability
+- other reception conditions
 
 ## Pilot OFF受信
 
-通常の受信ではPilot ONを推奨します。
+受信機はPilot ONおよびPilot OFFの両方に対応しています。
 
-Pilot OFF受信にも対応していますが、
-周波数調整はPilot ONよりもはるかに重要になります。
+通常の受信では **Pilot ONを推奨**します。
+
+Pilot OFF受信ではPilot ONよりも正確な周波数調整が必要です。
 
 実験では数百Hz程度の周波数ずれでも受信できましたが、
 ずれが大きくなるにつれて動作は不安定になりました。
@@ -175,134 +252,481 @@ Pilot OFF受信にも対応していますが、
 
 したがって、
 
-- Pilot ON：通常の安定受信に推奨
-- Pilot OFF：対応しているが、正確な周波数調整が必要
-- Pilot OFFでは数十Hz以内の周波数ずれを推奨
+- **Pilot ON:** 通常の安定受信に推奨
+- **Pilot OFF:** 対応しているが正確な周波数調整が必要
+- **Pilot OFFの安定運用:** 数十Hz以内の周波数ずれを推奨
 
-実際の性能は、シンボルレート、信号レベル、SDRハードウェア、
-発振器精度、およびその他の受信条件によって変化します。
+実際の性能は、シンボルレート、MODCOD、信号レベル、
+SDRハードウェア、発振器精度、周波数安定度、
+およびその他の受信条件によって変化します。
 
-## Main features
+---
+
+# Main Features
 
 - Simple GTK4 transceiver GUI
 - Raspberry Pi 5 support
-- GNU Radio based DVB-S2 transmission and reception
+- GNU Radio based DVB-S2 transmission
+- GNU Radio based DVB-S2 reception
 - Pluto Plus support
 - Logitech C920 H.264 hardware encoder support
 - USB audio support
-- DVB-S2 transmission with Pilot ON
-- Pilot ON / Pilot OFF reception
-- Symbol rates:
-  - 333 kSym/s
-  - 1 MSym/s
-  - 1.5 MSym/s
-  - 2 MSym/s
-- MODCOD support:
-  - QPSK 1/4
-  - QPSK 1/2
-  - QPSK 3/4
-  - 8PSK 3/5
-- Roll-off:
-  - 0.20
-  - 0.25
-  - 0.35
+- Pilot ON transmission
+- Pilot ON reception
+- Pilot OFF reception
+- Receiver watchdog
+- Receiver automatic restart capability
+- Real RF operation
 
-## 主な機能
+## Symbol Rates
+
+- 333 kSym/s
+- 1 MSym/s
+- 1.5 MSym/s
+- 2 MSym/s
+
+## MODCOD
+
+- QPSK 1/4
+- QPSK 1/2
+- QPSK 3/4
+- 8PSK 3/5
+
+## Roll-off
+
+- 0.20
+- 0.25
+- 0.35
+
+---
+
+# 主な機能
 
 - シンプルなGTK4送受信GUI
 - Raspberry Pi 5対応
-- GNU RadioによるDVB-S2送受信
+- GNU RadioによるDVB-S2送信
+- GNU RadioによるDVB-S2受信
 - Pluto Plus対応
 - Logitech C920 H.264ハードウェアエンコーダー対応
 - USBオーディオ対応
-- DVB-S2送信はPilot ON
-- Pilot ON / Pilot OFF受信
-- シンボルレート:
-  - 333 kSym/s
-  - 1 MSym/s
-  - 1.5 MSym/s
-  - 2 MSym/s
-- MODCOD:
-  - QPSK 1/4
-  - QPSK 1/2
-  - QPSK 3/4
-  - 8PSK 3/5
-- ロールオフ:
-  - 0.20
-  - 0.25
-  - 0.35
+- Pilot ON送信
+- Pilot ON受信
+- Pilot OFF受信
+- 受信watchdog
+- 受信機自動再起動機能
+- 実RF運用
 
-## Supported Hardware
+## シンボルレート
 
-This project officially supports and has been tested with the following hardware configuration:
+- 333 kSym/s
+- 1 MSym/s
+- 1.5 MSym/s
+- 2 MSym/s
+
+## MODCOD
+
+- QPSK 1/4
+- QPSK 1/2
+- QPSK 3/4
+- 8PSK 3/5
+
+## ロールオフ
+
+- 0.20
+- 0.25
+- 0.35
+
+---
+
+# Officially Supported Hardware
+
+The official KISS appliance configuration is:
 
 - Raspberry Pi 5 2GB
-- Raspberry Pi OS 64-bit Desktop (not Lite)
+- Raspberry Pi OS 64-bit Desktop
 - Official Raspberry Pi 7-inch touchscreen
-- Pluto Plus connected via USB only
+- USB mouse
+- Pluto Plus connected via USB
 - Logitech C920 equipped with the H.264 hardware encoder
 - USB audio dongle already supported by Langstone
+- Wired Ethernet connection
 
-Other hardware configurations are not officially supported.
+This is the reference hardware configuration used for the appliance.
 
-They may work, but they have not been tested as part of this appliance.
+Other configurations may work, but they are not part of the officially supported configuration.
 
-Users are welcome to experiment with other hardware configurations and report their results.
+---
 
-## Not supported:
+# 公式対応ハードウェア
 
+本プロジェクトはKISS設計思想に基づき、
+公式サポート構成を意図的に限定しています。
+
+基準となる構成は以下です。
+
+- Raspberry Pi 5 2GB
+- Raspberry Pi OS 64-bit Desktop
+- Raspberry Pi公式7インチタッチスクリーン
+- USBマウス
+- USB接続Pluto Plus
+- H.264ハードウェアエンコーダー搭載Logitech C920
+- Langstoneですでに使用実績のあるUSBオーディオドングル
+- 有線Ethernet
+
+その他の構成でも動作する可能性がありますが、
+公式サポート構成には含めません。
+
+---
+
+# Experimental and Verified Configurations
+
+The following configurations are **not part of the officially supported KISS appliance**, but have been demonstrated experimentally in real operation.
+
+## Low-Cost Webcam with Raspberry Pi 5 Software H.264 Encoding
+
+A low-cost USB webcam without an H.264 hardware encoder has been successfully used.
+
+The webcam provides uncompressed YUYV video.
+
+The processing path is:
+
+```text
+Low-cost USB webcam
+        |
+        | YUYV
+        v
+Raspberry Pi 5
+        |
+        | FFmpeg / libx264
+        | Software H.264 encoding
+        v
+MPEG Transport Stream
+        |
+        v
+GNU Radio / gr-dvbs2
+        |
+        v
+Pluto Plus
+        |
+        v
+DVB-S2 RF
+```
+
+A working experimental script is provided as:
+
+```text
+experiment.sh.lowcostwebcam-with-noencoder
+```
+
+The tested FFmpeg configuration includes:
+
+```text
+Camera input : YUYV422
+Input size   : 400x300
+Input rate   : 20 fps
+Output size  : 800x480
+Encoder      : libx264
+Preset       : ultrafast
+Tune         : zerolatency
+Profile      : baseline
+Audio        : OFF
+```
+
+This demonstrates that DVB-S2 live video transmission does not fundamentally require a webcam with a built-in H.264 encoder.
+
+The Raspberry Pi 5 can perform the H.264 encoding in software.
+
+However, this configuration remains experimental and is **not officially supported as part of the KISS appliance**.
+
+---
+
+# Experimental Mono Audio Transmission
+
+A second experimentally verified configuration adds mono audio to the low-cost webcam software-encoding system.
+
+A working script is provided as:
+
+```text
+experiment.sh.lowcost-SM1M-mono-audio
+```
+
+The tested signal path is:
+
+```text
+Low-cost webcam
+      |
+      | YUYV
+      v
+Raspberry Pi 5
+      |
+      +---- libx264 software H.264 video encoding
+      |
+USB audio input
+      |
+      +---- MP2 mono audio encoding
+      |
+      v
+MPEG Transport Stream
+      |
+      v
+GNU Radio DVB-S2
+      |
+      v
+Pluto Plus
+      |
+      v
+DVB-S2 RF
+```
+
+The tested audio configuration is:
+
+```text
+Codec       : MP2
+Bitrate     : 24 kbit/s
+Sample rate : 22050 Hz
+Channels    : 1 (mono)
+ALSA input  : hw:2,0
+```
+
+The default operating condition of this script is:
+
+```text
+Symbol Rate : 1 MSym/s
+MODCOD      : QPSK 1/2
+Pilot       : ON
+```
+
+Video and mono audio transmission have both been confirmed in actual operation.
+
+This configuration is an experimental demonstration and is not part of the officially supported KISS appliance configuration.
+
+---
+
+# 実験的に動作確認した構成
+
+以下は正式なKISSアプライアンス構成には含まれませんが、
+**実機で動作確認した構成**です。
+
+## 安価なWebカメラ＋Raspberry Pi 5ソフトウェアH.264エンコード
+
+H.264ハードウェアエンコーダーを搭載していない安価なUSB Webカメラを使用し、
+DVB-S2ライブ映像送信に成功しています。
+
+WebカメラからYUYV映像を取得し、
+Raspberry Pi 5上のFFmpeg / libx264でH.264へソフトウェアエンコードします。
+
+処理経路は、
+
+```text
+安価なUSB Webカメラ
+        |
+        | YUYV
+        v
+Raspberry Pi 5
+        |
+        | FFmpeg / libx264
+        | H.264ソフトウェアエンコード
+        v
+MPEG Transport Stream
+        |
+        v
+GNU Radio / gr-dvbs2
+        |
+        v
+Pluto Plus
+        |
+        v
+DVB-S2 RF
+```
+
+です。
+
+動作確認済み実験スクリプト：
+
+```text
+experiment.sh.lowcostwebcam-with-noencoder
+```
+
+代表的なFFmpeg設定：
+
+```text
+カメラ入力 : YUYV422
+入力解像度 : 400x300
+フレーム率 : 20 fps
+出力解像度 : 800x480
+エンコーダ : libx264
+Preset     : ultrafast
+Tune       : zerolatency
+Profile    : baseline
+音声       : OFF
+```
+
+この実験によって、
+DVB-S2ライブ映像送信にH.264ハードウェアエンコーダー内蔵Webカメラが
+必須ではないことを確認しました。
+
+Raspberry Pi 5によるH.264ソフトウェアエンコードでも実際に送信できます。
+
+ただし、これは実験構成であり、
+正式なKISSアプライアンスのサポート対象には含めません。
+
+---
+
+## 安価なWebカメラ＋モノラル音声
+
+さらに、Pi 5によるH.264ソフトウェアエンコード映像へ
+モノラル音声を追加した構成でも動作を確認しました。
+
+動作確認済みスクリプト：
+
+```text
+experiment.sh.lowcost-SM1M-mono-audio
+```
+
+音声設定：
+
+```text
+Codec       : MP2
+Bitrate     : 24 kbit/s
+Sample rate : 22050 Hz
+Channels    : 1 mono
+ALSA input  : hw:2,0
+```
+
+デフォルト送信条件：
+
+```text
+Symbol Rate : 1 MSym/s
+MODCOD      : QPSK 1/2
+Pilot       : ON
+```
+
+映像およびモノラル音声の両方について、
+実際の送受信動作を確認しています。
+
+この構成も正式サポートではなく、
+実験的な動作確認例として提供します。
+
+---
+
+# Not Officially Supported
+
+The following configurations are outside the official KISS appliance configuration:
+
+- Raspberry Pi OS Lite
 - Network-connected Pluto Plus
+- RTL-SDR
 - Other SDR hardware
 - Other webcams
-- Software H.264 encoding on Raspberry Pi 5
+- Logitech C920 without the H.264 hardware encoder
+- Raspberry Pi 5 software H.264 encoding
 - Other USB audio devices
+- Wi-Fi operation
 
-Other hardware may work, but it is outside the scope of this project
-and is not officially supported.
+Some of these configurations may work.
 
-## 対応ハードウェア
+In particular, Raspberry Pi 5 software H.264 encoding with a low-cost webcam has already been experimentally demonstrated as described above.
 
-本プロジェクトはKISS（Keep It Simple, Stupid）の設計思想に基づいています。
+However:
 
-公式にサポートし、実機試験を行っている構成は以下に限定します。
+> **Working experimentally does not automatically make a configuration officially supported.**
 
-- Raspberry Pi 5
-- USB接続のPluto Plus
-- H.264ハードウェアエンコーダー搭載Logitech C920
-- 開発者が実機試験した特定のUSBオーディオドングル
+Users are welcome to modify the source code, test other hardware, and report their results.
 
-以下はサポート対象外です。
+---
 
-- ネットワーク接続のPluto Plus
-- その他のSDRハードウェア
+# 非公式構成
+
+以下は正式なKISSアプライアンス構成には含まれません。
+
+- Raspberry Pi OS Lite
+- ネットワーク接続Pluto Plus
+- RTL-SDR
+- その他のSDR
 - その他のWebカメラ
+- H.264ハードウェアエンコーダー非搭載C920
 - Raspberry Pi 5によるH.264ソフトウェアエンコード
 - その他のUSBオーディオデバイス
+- Wi-Fi運用
 
-その他のハードウェアでも動作する可能性はありますが、
-本プロジェクトの対象範囲外であり、公式にはサポートしません。
+このうち一部については動作する可能性があります。
 
-## Required software
+特に、安価なWebカメラとRaspberry Pi 5による
+H.264ソフトウェアエンコードについては、
+前述のとおり実際に動作確認済みです。
 
-- Raspberry Pi OS 64-bit
+ただし、
+
+> **実験で動作したことと、正式サポートすることは別です。**
+
+他のハードウェアを使用したい場合は、
+自由にソースコードを変更し、実験してください。
+
+試験結果の報告を歓迎します。
+
+---
+
+# Reference DVB-S2 Configuration
+
+The recommended default operating configuration is:
+
+```text
+Symbol Rate : 333 kSym/s
+MODCOD      : QPSK 1/2
+Pilot       : ON
+Roll-off    : 0.20
+RX Watchdog : ON
+```
+
+This configuration is intended as the normal starting point for operation and testing.
+
+---
+
+# 基準DVB-S2設定
+
+通常運用および試験の開始点として推奨する設定は以下です。
+
+```text
+Symbol Rate : 333 kSym/s
+MODCOD      : QPSK 1/2
+Pilot       : ON
+Roll-off    : 0.20
+RX Watchdog : ON
+```
+
+---
+
+# Required Software
+
+- Raspberry Pi OS 64-bit Desktop
 - GNU Radio
 - gr-dvbs2
 - gr-dvbs2rx
 - GTK4
-- FFmpeg / ffplay
+- FFmpeg
+- ffplay
 - Python 3
+- libiio
+- libad9361
 
-## 必要なソフトウェア
+---
 
-- Raspberry Pi OS 64-bit
+# 必要なソフトウェア
+
+- Raspberry Pi OS 64-bit Desktop
 - GNU Radio
 - gr-dvbs2
 - gr-dvbs2rx
 - GTK4
-- FFmpeg / ffplay
+- FFmpeg
+- ffplay
 - Python 3
+- libiio
+- libad9361
 
-## Environment setup
+---
+
+# Environment Setup
 
 Update the package list and install the required packages:
 
@@ -344,7 +768,9 @@ python3-libiio \
 libad9361-dev
 ```
 
-### Build and install gr-dvbs2
+---
+
+## Build and Install gr-dvbs2
 
 ```bash
 cd ~
@@ -366,7 +792,9 @@ sudo make install
 sudo ldconfig
 ```
 
-### Clone the transceiver repository
+---
+
+## Clone the Transceiver Repository
 
 ```bash
 cd ~/src
@@ -374,7 +802,9 @@ cd ~/src
 git clone https://github.com/shinji-y-jp/rpi-dvbs2-transceiver-gui.git
 ```
 
-### Build and install gr-dvbs2rx
+---
+
+## Build and Install gr-dvbs2rx
 
 ```bash
 cd ~/src
@@ -388,10 +818,15 @@ git clone https://github.com/google/cpu_features.git
 git apply ~/src/rpi-dvbs2-transceiver-gui/gr-dvbs2rx_reset_fixes.patch
 
 # Fix Python binding header hash after applying the patch
+
 HEADER="include/gnuradio/dvbs2rx/symbol_sync_cc.h"
 BINDING="python/dvbs2rx/bindings/symbol_sync_cc_python.cc"
+
 HASH=$(md5sum "$HEADER" | awk '{print $1}')
-sed -i -E "s/BINDTOOL_HEADER_FILE_HASH\([0-9a-fA-F]+\)/BINDTOOL_HEADER_FILE_HASH(${HASH})/" "$BINDING"
+
+sed -i -E \
+"s/BINDTOOL_HEADER_FILE_HASH\([0-9a-fA-F]+\)/BINDTOOL_HEADER_FILE_HASH(${HASH})/" \
+"$BINDING"
 
 mkdir -p build
 cd build
@@ -403,11 +838,15 @@ sudo make install
 sudo ldconfig
 ```
 
-### Build the transceiver GUI
+---
+
+## Build the Transceiver GUI
 
 ```bash
 cd ~/src/rpi-dvbs2-transceiver-gui
-mkdir data
+
+mkdir -p data
+
 chmod +x *.py
 chmod +x *.sh
 
@@ -415,9 +854,15 @@ make clean
 make
 ```
 
+Run:
+
+```bash
+./app
+```
+
 ---
 
-## 環境構築
+# 環境構築
 
 パッケージ一覧を更新し、必要なパッケージをインストールします。
 
@@ -459,7 +904,9 @@ python3-libiio \
 libad9361-dev
 ```
 
-### gr-dvbs2 のビルドとインストール
+---
+
+## gr-dvbs2 のビルドとインストール
 
 ```bash
 cd ~
@@ -481,7 +928,9 @@ sudo make install
 sudo ldconfig
 ```
 
-### 送受信機リポジトリの取得
+---
+
+## 送受信機リポジトリの取得
 
 ```bash
 cd ~/src
@@ -489,7 +938,9 @@ cd ~/src
 git clone https://github.com/shinji-y-jp/rpi-dvbs2-transceiver-gui.git
 ```
 
-### gr-dvbs2rx のビルドとインストール
+---
+
+## gr-dvbs2rx のビルドとインストール
 
 ```bash
 cd ~/src
@@ -503,10 +954,15 @@ git clone https://github.com/google/cpu_features.git
 git apply ~/src/rpi-dvbs2-transceiver-gui/gr-dvbs2rx_reset_fixes.patch
 
 # パッチ適用後にPython bindingのヘッダーハッシュを修正
+
 HEADER="include/gnuradio/dvbs2rx/symbol_sync_cc.h"
 BINDING="python/dvbs2rx/bindings/symbol_sync_cc_python.cc"
+
 HASH=$(md5sum "$HEADER" | awk '{print $1}')
-sed -i -E "s/BINDTOOL_HEADER_FILE_HASH\([0-9a-fA-F]+\)/BINDTOOL_HEADER_FILE_HASH(${HASH})/" "$BINDING"
+
+sed -i -E \
+"s/BINDTOOL_HEADER_FILE_HASH\([0-9a-fA-F]+\)/BINDTOOL_HEADER_FILE_HASH(${HASH})/" \
+"$BINDING"
 
 mkdir -p build
 cd build
@@ -518,10 +974,14 @@ sudo make install
 sudo ldconfig
 ```
 
-### GUI送受信機のビルド
+---
+
+## GUI送受信機のビルド
 
 ```bash
 cd ~/src/rpi-dvbs2-transceiver-gui
+
+mkdir -p data
 
 chmod +x *.py
 chmod +x *.sh
@@ -530,152 +990,226 @@ make clean
 make
 ```
 
-## Files
+実行：
 
-- `main4.c`
-  GTK4 transceiver GUI source code
+```bash
+./app
+```
 
-- `RF_UDP_dvbs2_tx.grc`
-  GNU Radio Companion DVB-S2 transmitter flowgraph
+---
 
-- `RF_UDP_dvbs2_rx.py`
-  GNU Radio DVB-S2 receiver
+# Files
 
-- `RF_UDP_my_dvbs2_rx2_pluto.grc`
-  GNU Radio Companion DVB-S2 receiver flowgraph for Pluto
+## Main Application
 
-- `RF_FIFO_dvbs2_experiment.py`
-  DVB-S2 experimental transmitter flowgraph
+- `main4.c`  
+  GTK4 transceiver GUI source code.
 
-- `start_app.sh`
-  Starts the GUI application
+- `makefile`  
+  Builds the GTK4 transceiver GUI.
 
-- `start_tx.sh`
-  Starts the transmitter
+## DVB-S2 Transmitter
 
-- `stop_tx.sh`
-  Stops the transmitter
+- `RF_UDP_dvbs2_tx.grc`  
+  GNU Radio Companion DVB-S2 transmitter flowgraph.
 
-- `start_rx.sh`
-  Starts the receiver
+- `RF_FIFO_dvbs2_experiment.py`  
+  DVB-S2 experimental FIFO transmitter flowgraph.
 
-- `stop_rx.sh`
-  Stops the receiver
+- `start_tx.sh`  
+  Starts the transmitter.
 
-- `watchdog_rx.sh`
-  Monitors receiver operation and restarts it when required
+- `stop_tx.sh`  
+  Stops the transmitter.
 
-- `udp_relay.py`
-  Relays the received UDP transport stream
+## DVB-S2 Receiver
 
-- `run_udp_hd_test.sh`
-  Starts the transmission, reception, UDP relay, and verification processes used for testing
+- `RF_UDP_dvbs2_rx.py`  
+  GNU Radio DVB-S2 receiver.
 
-- `check_stall.sh`
+- `RF_UDP_my_dvbs2_rx2_pluto.grc`  
+  GNU Radio Companion DVB-S2 receiver flowgraph for Pluto.
+
+- `dvbs2rx_rx_hier.grc`  
+  GNU Radio Companion hierarchical receiver flowgraph.
+
+- `dvbs2_rx_epy_block_0.py`  
+  Embedded Python block used by the GNU Radio receiver.
+
+- `start_rx.sh`  
+  Starts the receiver.
+
+- `stop_rx.sh`  
+  Stops the receiver.
+
+## Receiver Stability
+
+- `watchdog_rx.sh`  
+  Monitors receiver operation and restarts it when required.
+
+- `check_stall.sh`  
   Checks CPU usage of the processing threads and diagnoses whether `plsync_cc`
-  has entered an infinite search state
+  has entered an infinite search state.
 
-- `stop_test.sh`
-  Stops all processes used for the test and removes temporary files
+- `gr-dvbs2rx_reset_fixes.patch`  
+  Receiver reset and reacquisition fixes for `gr-dvbs2rx`.
 
-- `dvbs2rx_rx_hier.grc`
-  GNU Radio Companion hierarchical receiver flowgraph
+## Test and Utility Files
 
-- `dvbs2_rx_epy_block_0.py`
-  Embedded Python block used by the GNU Radio receiver
+- `start_app.sh`  
+  Starts the GUI application.
 
-- `dvbs2_tx_rx_epy_block_0.py`
-  Embedded Python block used by the DVB-S2 transmit/receive system
+- `udp_relay.py`  
+  Relays the received UDP Transport Stream.
 
-- `gr-dvbs2rx_reset_fixes.patch`
-  Receiver reset and reacquisition fixes for gr-dvbs2rx
+- `run_udp_hd_test.sh`  
+  Starts the transmission, reception, UDP relay, and verification processes used for testing.
 
-- `experiment.sh`
-  Experimental DVB-S2 operation script
+- `stop_test.sh`  
+  Stops all processes used for testing and removes temporary files.
 
-- `makefile`
-  Builds the GTK4 transceiver GUI
+- `dvbs2_tx_rx_epy_block_0.py`  
+  Embedded Python block used by the DVB-S2 transmit/receive system.
 
-## ファイル
+- `experiment.sh`  
+  General DVB-S2 experimental operation script.
 
-- `main4.c`
-  GTK4送受信GUIのソースコード
+## Experimental Low-Cost Webcam Tests
 
-- `RF_UDP_dvbs2_tx.grc`
-  GNU Radio Companion DVB-S2送信フローグラフ
+- `experiment.sh.lowcostwebcam-with-noencoder`  
+  Tested video-only DVB-S2 transmission using a low-cost YUYV webcam and Raspberry Pi 5 software H.264 encoding.
 
-- `RF_UDP_dvbs2_rx.py`
-  GNU Radio DVB-S2受信機
+- `experiment.sh.lowcost-SM1M-mono-audio`  
+  Tested DVB-S2 transmission using a low-cost webcam, Raspberry Pi 5 software H.264 encoding, and MP2 mono audio.
 
-- `RF_UDP_my_dvbs2_rx2_pluto.grc`
-  Pluto用GNU Radio Companion DVB-S2受信フローグラフ
+## Still Image Example
 
-- `RF_FIFO_dvbs2_experiment.py`
-  DVB-S2実験用送信フローグラフ
+- `ume.JPG`  
+  Sample photograph used for DVB-S2 still-image transmission.
 
-- `start_app.sh`
-  GUIアプリケーションを起動します
+- `experiment.sh.ume`  
+  Sample still-image transmission script.
 
-- `start_tx.sh`
-  送信機を起動します
+---
 
-- `stop_tx.sh`
-  送信機を停止します
+# ファイル
 
-- `start_rx.sh`
-  受信機を起動します
+## メインアプリケーション
 
-- `stop_rx.sh`
-  受信機を停止します
+- `main4.c`  
+  GTK4送受信GUIのソースコード。
 
-- `watchdog_rx.sh`
-  受信動作を監視し、必要に応じて受信機を再起動します
+- `makefile`  
+  GTK4送受信GUIをビルドします。
 
-- `udp_relay.py`
-  受信したUDPトランスポートストリームを中継します
+## DVB-S2送信機
 
-- `run_udp_hd_test.sh`
-  試験用の送信、受信、UDPリレー、および検証処理を一括して起動します
+- `RF_UDP_dvbs2_tx.grc`  
+  GNU Radio Companion DVB-S2送信フローグラフ。
 
-- `check_stall.sh`
+- `RF_FIFO_dvbs2_experiment.py`  
+  DVB-S2実験用FIFO送信フローグラフ。
+
+- `start_tx.sh`  
+  送信機を起動します。
+
+- `stop_tx.sh`  
+  送信機を停止します。
+
+## DVB-S2受信機
+
+- `RF_UDP_dvbs2_rx.py`  
+  GNU Radio DVB-S2受信機。
+
+- `RF_UDP_my_dvbs2_rx2_pluto.grc`  
+  Pluto用GNU Radio Companion DVB-S2受信フローグラフ。
+
+- `dvbs2rx_rx_hier.grc`  
+  GNU Radio Companion階層型受信フローグラフ。
+
+- `dvbs2_rx_epy_block_0.py`  
+  GNU Radio受信機で使用するEmbedded Python Block。
+
+- `start_rx.sh`  
+  受信機を起動します。
+
+- `stop_rx.sh`  
+  受信機を停止します。
+
+## 受信安定化関連
+
+- `watchdog_rx.sh`  
+  受信動作を監視し、必要に応じて受信機を再起動します。
+
+- `check_stall.sh`  
   各処理スレッドのCPU使用率を確認し、
-  `plsync_cc`が無限探索状態へ陥っていないか診断します
+  `plsync_cc`が無限探索状態へ陥っていないか診断します。
 
-- `stop_test.sh`
-  試験に使用した全プロセスを停止し、一時ファイルを削除します
+- `gr-dvbs2rx_reset_fixes.patch`  
+  `gr-dvbs2rx`の受信再捕捉改善用パッチ。
 
-- `dvbs2rx_rx_hier.grc`
-  GNU Radio Companionの階層型受信フローグラフ
+## 試験およびユーティリティ
 
-- `dvbs2_rx_epy_block_0.py`
-  GNU Radio受信機で使用するEmbedded Python Block
+- `start_app.sh`  
+  GUIアプリケーションを起動します。
 
-- `dvbs2_tx_rx_epy_block_0.py`
-  DVB-S2送受信システムで使用するEmbedded Python Block
+- `udp_relay.py`  
+  受信したUDP Transport Streamを中継します。
 
-- `gr-dvbs2rx_reset_fixes.patch`
-  gr-dvbs2rxの受信再捕捉改善用パッチ
+- `run_udp_hd_test.sh`  
+  試験用の送信、受信、UDPリレー、
+  および検証処理を一括して起動します。
 
-- `experiment.sh`
-  DVB-S2実験用スクリプト
+- `stop_test.sh`  
+  試験に使用した全プロセスを停止し、
+  一時ファイルを削除します。
 
-- `makefile`
-  GTK4送受信GUIをビルドします
-  
-## Sample Image Transmission
+- `dvbs2_tx_rx_epy_block_0.py`  
+  DVB-S2送受信システムで使用するEmbedded Python Block。
 
-The files `ume.JPG` and `experiment.sh.ume` are included as a simple
-DVB-S2 still-image transmission example.
+- `experiment.sh`  
+  DVB-S2実験用スクリプト。
+
+## 安価Webカメラ実験
+
+- `experiment.sh.lowcostwebcam-with-noencoder`  
+  安価なYUYV WebカメラとRaspberry Pi 5ソフトウェアH.264エンコードを使用した、
+  映像のみのDVB-S2送信動作確認済みスクリプト。
+
+- `experiment.sh.lowcost-SM1M-mono-audio`  
+  安価なWebカメラ、Raspberry Pi 5ソフトウェアH.264エンコード、
+  MP2モノラル音声を使用したDVB-S2送信動作確認済みスクリプト。
+
+## 静止画サンプル
+
+- `ume.JPG`  
+  DVB-S2静止画送信に使用するサンプル写真。
+
+- `experiment.sh.ume`  
+  静止画送信用サンプルスクリプト。
+
+---
+
+# Sample Image Transmission
+
+The files:
+
+```text
+ume.JPG
+experiment.sh.ume
+```
+
+are included as a simple DVB-S2 still-image transmission example.
 
 Rename:
 
-```bash
+```text
 experiment.sh.ume
 ```
 
 to:
 
-```bash
+```text
 experiment.sh
 ```
 
@@ -687,40 +1221,42 @@ The transmitter will send the JPEG image named:
 ume.JPG
 ```
 
-The included `ume.JPG` is a photograph of Japanese plum blossoms
-taken by Shinji Yamazaki.
+The included `ume.JPG` is a photograph of Japanese plum blossoms taken by Shinji Yamazaki.
 
-In Japan, plum blossoms are one of the beautiful signs that early spring
-is approaching.
+In Japan, plum blossoms are traditionally regarded as one of the beautiful signs that early spring is approaching.
 
-### Using Your Own Image
+## Using Your Own Image
 
 You can replace the sample photograph with your own JPEG image.
 
-Any JPEG image can be used as long as the file is named:
+Rename your JPEG image to:
 
 ```text
 ume.JPG
 ```
 
-Simply rename your JPEG image to `ume.JPG`, place it in the same directory,
-and run `experiment.sh`.
+place it in the same directory, and run:
 
-This provides a simple way to transmit your own still image using the
-DVB-S2 transmitter.
+```bash
+./experiment.sh
+```
 
-## サンプル画像送信
+This provides a simple way to transmit your own still image using the DVB-S2 transmitter.
 
-`ume.JPG` と `experiment.sh.ume` は、DVB-S2による静止画送信を
-試すための簡単なサンプルとして収録しています。
+---
 
-`experiment.sh.ume` を
+# サンプル画像送信
+
+`ume.JPG` と `experiment.sh.ume` は、
+DVB-S2による静止画送信を試すための簡単なサンプルです。
+
+`experiment.sh.ume` を、
 
 ```text
 experiment.sh
 ```
 
-へ名前変更してスクリプトを実行すると、
+へ名前変更して実行すると、
 
 ```text
 ume.JPG
@@ -728,165 +1264,93 @@ ume.JPG
 
 という名前のJPEG画像が送信されます。
 
-収録されている `ume.JPG` は、山崎慎慈が撮影した梅の花の写真です。
+収録している `ume.JPG` は山崎慎慈が撮影した梅の花です。
 
-日本では、梅の花は早春の訪れを告げる美しいものの一つとして
-古くから親しまれています。
+日本では梅の花は、
+早春の訪れを告げる美しいものの一つとして古くから親しまれています。
 
-### 自分の画像を送信する場合
+## 自分の画像を送信する場合
 
-サンプルの梅の写真を、自分で用意したJPEG画像へ置き換えることもできます。
-
-JPEG画像のファイル名を、
+自分のJPEG画像を、
 
 ```text
 ume.JPG
 ```
 
-にしてください。
+へ名前変更して同じディレクトリへ置き、
 
-自分のJPEG画像を `ume.JPG` へ名前変更し、同じディレクトリへ置いて
-`experiment.sh` を実行すれば、その画像を送信できます。
+```bash
+./experiment.sh
+```
+
+を実行してください。
 
 これにより、自分の静止画をDVB-S2で簡単に送信できます。
 
-## Build
-
-```bash
-make
-./app
-```
-
-# Raspberry Pi 5 KISS DVB-S2 Transceiver
-
-A simple DVB-S2 transmitter and receiver for Raspberry Pi 5 using GNU Radio and Pluto Plus.
-
-This project is intentionally designed around the KISS principle:
-
-> Keep It Simple.
-
-The goal is not to support every SDR, webcam, audio device, operating system, or possible configuration.
-
-The goal is to provide a simple and reproducible DVB-S2 transceiver using a known working hardware and software configuration.
-
 ---
 
-# How this project started
+# KISS Appliance Setup
 
-This project did not start with a plan to build a complete DVB-S2 transceiver.
+The following procedure converts a tested Raspberry Pi 5 installation into a simple appliance-style system.
 
-The original inspiration came from the DVB-S2 loopback test provided by Igor's gr-dvbs2rx project.
-
-The initial idea was very simple:
-
-> "What happens if the transmitter and receiver in the loopback test are separated and connected through a real RF path?"
-
-That experiment worked.
-
-From there, the system gradually evolved through real RF testing, live video transmission, receiver stability testing, and finally a simple GTK4 user interface.
-
-The DVB-S2 modulation and demodulation technology itself comes from the excellent existing open-source projects on which this system is built.
-
-The purpose of this project is not to reinvent DVB-S2, but to integrate those components into a simple and practical Raspberry Pi 5 DVB-S2 transceiver.
-
----
-
-# Supported Hardware
-
-This project officially supports and has been tested with the following hardware configuration:
-
-- Raspberry Pi 5 2GB
-- Raspberry Pi OS 64-bit Desktop (not Lite)
-- Official Raspberry Pi 7-inch touchscreen
-- USB mouse
-- Pluto Plus connected via USB only
-- Logitech C920 equipped with the H.264 hardware encoder
-- USB audio dongle already supported by Langstone
-- Wired Ethernet connection
-
-Other hardware configurations are not officially supported.
-
-They may work, but they have not been tested as part of this appliance.
-
-Users are welcome to experiment with other hardware configurations and report their results.
-
----
-
-# Not Supported
-
-The following configurations are not officially supported:
-
-- Raspberry Pi OS Lite
-- Network-connected Pluto Plus
-- RTL-SDR
-- Other SDR hardware
-- Other webcams
-- Logitech C920 without the H.264 hardware encoder
-- Raspberry Pi 5 software H.264 encoding
-- Other USB audio devices
-- Wi-Fi operation
-
-If you wish to use another configuration, please feel free to modify the source code and test it yourself.
-
----
-
-# Reference DVB-S2 Configuration
-
-The recommended default configuration is:
+Reference environment:
 
 ```text
-Symbol Rate : 333 kSym/s
-MODCOD      : QPSK 1/2
-Pilot       : ON
-Roll-off    : 0.20
-RX Watchdog : ON
+Raspberry Pi 5 2GB
+Raspberry Pi OS 64-bit Desktop
+Official Raspberry Pi 7-inch touchscreen
+USB mouse
+Pluto Plus USB
+Logitech C920 with H.264 hardware encoder
+USB audio
+Wired Ethernet
 ```
 
+---
+
+## 1. Update System
+
 ```bash
-# ============================================================
-# DVB-S2 KISS Appliance Setup
-# Raspberry Pi 5 2GB
-# Raspberry Pi OS 64-bit Desktop
-# Wired LAN
-# ============================================================
-
-
-# ------------------------------------------------------------
-# 1. Update system
-# ------------------------------------------------------------
-
 sudo apt update
 sudo apt upgrade -y
+```
 
+---
 
-# ------------------------------------------------------------
-# 2. Desktop Auto Login
-# ------------------------------------------------------------
+## 2. Enable Desktop Auto Login
 
+Run:
+
+```bash
 sudo raspi-config
+```
 
-# Select:
-#
-# System Options
-#   -> Boot / Auto Login
-#   -> Desktop Autologin
-#
-# Exit raspi-config without rebooting yet.
+Select:
 
+```text
+System Options
+  -> Boot / Auto Login
+  -> Desktop Autologin
+```
 
-# ------------------------------------------------------------
-# 3. Check DVB-S2 application
-# ------------------------------------------------------------
+Exit without rebooting yet.
 
+---
+
+## 3. Check the DVB-S2 Application
+
+```bash
 cd ~/src/rpi-dvbs2-transceiver-gui
+
 pwd
 ls -l
+```
 
+---
 
-# ------------------------------------------------------------
-# 4. Create appliance startup script
-# ------------------------------------------------------------
+## 4. Create Appliance Startup Script
 
+```bash
 cat > ~/start-dvbs2-appliance.sh <<'EOF'
 #!/bin/bash
 
@@ -898,19 +1362,21 @@ cd /home/pi/src/rpi-dvbs2-transceiver-gui || exit 1
 EOF
 
 chmod +x ~/start-dvbs2-appliance.sh
+```
 
+---
 
-# ------------------------------------------------------------
-# 5. Create Desktop autostart directory
-# ------------------------------------------------------------
+## 5. Create Desktop Autostart Directory
 
+```bash
 mkdir -p ~/.config/autostart
+```
 
+---
 
-# ------------------------------------------------------------
-# 6. Register DVB-S2 KISS UI for automatic startup
-# ------------------------------------------------------------
+## 6. Register DVB-S2 GUI for Automatic Startup
 
+```bash
 cat > ~/.config/autostart/dvbs2-appliance.desktop <<'EOF'
 [Desktop Entry]
 Type=Application
@@ -919,153 +1385,404 @@ Exec=/home/pi/start-dvbs2-appliance.sh
 Terminal=false
 X-GNOME-Autostart-enabled=true
 EOF
+```
 
+---
 
-# ------------------------------------------------------------
-# 7. Check autostart configuration
-# ------------------------------------------------------------
+## 7. Check Autostart Configuration
 
+```bash
 cat ~/start-dvbs2-appliance.sh
 
 cat ~/.config/autostart/dvbs2-appliance.desktop
+```
 
+---
 
-# ------------------------------------------------------------
-# 8. Disable Wi-Fi
-# ------------------------------------------------------------
+## 8. Disable Wi-Fi
 
+```bash
 sudo rfkill block wifi
+```
 
+---
 
-# ------------------------------------------------------------
-# 9. Disable Bluetooth if not required
-# ------------------------------------------------------------
+## 9. Disable Bluetooth if Not Required
 
+```bash
 sudo rfkill block bluetooth
+```
 
+---
 
-# ------------------------------------------------------------
-# 10. Check wired LAN
-# ------------------------------------------------------------
+## 10. Check Wired Ethernet
 
+```bash
 ip addr show
 
 ip route
+```
 
+---
 
-# ------------------------------------------------------------
-# 11. Check Pluto Plus USB
-# ------------------------------------------------------------
+## 11. Check Pluto Plus USB
 
+```bash
 iio_info -s
+```
 
+---
 
-# ------------------------------------------------------------
-# 12. Check Logitech C920
-# ------------------------------------------------------------
+## 12. Check Logitech C920
 
+```bash
 v4l2-ctl --list-devices
+```
 
+---
 
-# ------------------------------------------------------------
-# 13. Check USB audio
-# ------------------------------------------------------------
+## 13. Check USB Audio
 
+```bash
 aplay -l
 
 arecord -l
+```
 
+---
 
-# ------------------------------------------------------------
-# 14. Reboot and test appliance startup
-# ------------------------------------------------------------
+## 14. Reboot and Test Appliance Startup
 
+```bash
 sudo reboot
+```
 
+After reboot, confirm:
 
-# ============================================================
-# AFTER REBOOT
-#
-# Confirm:
-#
-# Desktop Auto Login
-# DVB-S2 KISS UI Auto Start
-# Pluto Plus USB
-# C920
-# USB Audio
-# Wired LAN
-#
-# Test:
-#
-# 333 kSym/s
-# QPSK 1/2
-# Pilot ON
-# Watchdog ON
-#
-# TX/RX
-# ============================================================
+```text
+Desktop Auto Login
+DVB-S2 KISS UI Auto Start
+Pluto Plus USB
+Logitech C920
+USB Audio
+Wired Ethernet
+```
 
+Then test the reference configuration:
 
-# ------------------------------------------------------------
-# 15. FINAL CLEANUP
-#
-# Run ONLY after all appliance tests have passed.
-# ------------------------------------------------------------
+```text
+Symbol Rate : 333 kSym/s
+MODCOD      : QPSK 1/2
+Pilot       : ON
+Roll-off    : 0.20
+Watchdog    : ON
+```
 
+Verify both TX and RX.
 
-# Clear shell history
+---
 
+# Golden Master Final Cleanup
+
+Perform the following steps **only after all appliance tests have passed**.
+
+## Clear Shell History
+
+```bash
 history -c
 rm -f ~/.bash_history
+```
 
+## Clean APT Cache
 
-# Clean APT cache
-
+```bash
 sudo apt clean
+```
 
+## Clean User Cache
 
-# Clean user cache
-
+```bash
 rm -rf ~/.cache/*
+```
 
+## Remove SSH Host Keys
 
-# ------------------------------------------------------------
-# 16. Remove SSH host keys from distribution image
-# ------------------------------------------------------------
-
+```bash
 sudo rm -f /etc/ssh/ssh_host_*
+```
 
+## Reset machine-id
 
-# ------------------------------------------------------------
-# 17. Reset machine-id
-# ------------------------------------------------------------
-
+```bash
 sudo truncate -s 0 /etc/machine-id
 
 sudo rm -f /var/lib/dbus/machine-id
 
 sudo ln -s /etc/machine-id /var/lib/dbus/machine-id
+```
 
+## Check Disk Usage
 
-# ------------------------------------------------------------
-# 18. Check disk usage
-# ------------------------------------------------------------
-
+```bash
 df -h
+```
 
+## Shutdown the Golden Master
 
-# ------------------------------------------------------------
-# 19. Shutdown Golden Master
-# ------------------------------------------------------------
-
+```bash
 sudo poweroff
+```
 
+> **DO NOT BOOT THIS SD CARD AGAIN BEFORE CREATING THE DISTRIBUTION IMAGE.**
 
-# ============================================================
-# DO NOT BOOT THIS SD CARD AGAIN BEFORE CREATING THE IMAGE.
-#
-# Remove SD card after shutdown.
-# Create the distribution image from this SD card.
-# ============================================================
+After shutdown:
+
+1. Remove the SD card.
+2. Create the distribution image from the SD card.
+3. Preserve the original Golden Master.
+
+---
+
+# KISSアプライアンス化
+
+以下は、試験済みRaspberry Pi 5環境を
+単純なアプライアンスとして使用するための手順です。
+
+基準環境：
+
+```text
+Raspberry Pi 5 2GB
+Raspberry Pi OS 64-bit Desktop
+Raspberry Pi公式7インチタッチスクリーン
+USBマウス
+USB接続Pluto Plus
+H.264ハードウェアエンコーダー搭載Logitech C920
+USBオーディオ
+有線Ethernet
+```
+
+---
+
+## 1. システム更新
+
+```bash
+sudo apt update
+sudo apt upgrade -y
+```
+
+---
+
+## 2. Desktop Auto Loginを有効化
+
+```bash
+sudo raspi-config
+```
+
+以下を選択します。
+
+```text
+System Options
+  -> Boot / Auto Login
+  -> Desktop Autologin
+```
+
+この時点では再起動しません。
+
+---
+
+## 3. DVB-S2アプリケーション確認
+
+```bash
+cd ~/src/rpi-dvbs2-transceiver-gui
+
+pwd
+ls -l
+```
+
+---
+
+## 4. アプライアンス起動スクリプト作成
+
+```bash
+cat > ~/start-dvbs2-appliance.sh <<'EOF'
+#!/bin/bash
+
+sleep 5
+
+cd /home/pi/src/rpi-dvbs2-transceiver-gui || exit 1
+
+./app
+EOF
+
+chmod +x ~/start-dvbs2-appliance.sh
+```
+
+---
+
+## 5. Desktop autostartディレクトリ作成
+
+```bash
+mkdir -p ~/.config/autostart
+```
+
+---
+
+## 6. DVB-S2 GUI自動起動登録
+
+```bash
+cat > ~/.config/autostart/dvbs2-appliance.desktop <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=DVB-S2 KISS UI
+Exec=/home/pi/start-dvbs2-appliance.sh
+Terminal=false
+X-GNOME-Autostart-enabled=true
+EOF
+```
+
+---
+
+## 7. 自動起動設定確認
+
+```bash
+cat ~/start-dvbs2-appliance.sh
+
+cat ~/.config/autostart/dvbs2-appliance.desktop
+```
+
+---
+
+## 8. Wi-Fi無効化
+
+```bash
+sudo rfkill block wifi
+```
+
+---
+
+## 9. 不要な場合はBluetooth無効化
+
+```bash
+sudo rfkill block bluetooth
+```
+
+---
+
+## 10. 有線LAN確認
+
+```bash
+ip addr show
+
+ip route
+```
+
+---
+
+## 11. Pluto Plus USB確認
+
+```bash
+iio_info -s
+```
+
+---
+
+## 12. Logitech C920確認
+
+```bash
+v4l2-ctl --list-devices
+```
+
+---
+
+## 13. USBオーディオ確認
+
+```bash
+aplay -l
+
+arecord -l
+```
+
+---
+
+## 14. 再起動およびアプライアンス動作確認
+
+```bash
+sudo reboot
+```
+
+再起動後、以下を確認します。
+
+```text
+Desktop Auto Login
+DVB-S2 KISS UI Auto Start
+Pluto Plus USB
+Logitech C920
+USB Audio
+Wired Ethernet
+```
+
+基準設定：
+
+```text
+Symbol Rate : 333 kSym/s
+MODCOD      : QPSK 1/2
+Pilot       : ON
+Roll-off    : 0.20
+Watchdog    : ON
+```
+
+TXおよびRXの両方を確認します。
+
+---
+
+# Golden Master Final Cleanup
+
+以下は**すべてのアプライアンス試験が完了した後だけ**実行してください。
+
+## シェル履歴削除
+
+```bash
+history -c
+rm -f ~/.bash_history
+```
+
+## APTキャッシュ削除
+
+```bash
+sudo apt clean
+```
+
+## ユーザーキャッシュ削除
+
+```bash
+rm -rf ~/.cache/*
+```
+
+## SSHホストキー削除
+
+```bash
+sudo rm -f /etc/ssh/ssh_host_*
+```
+
+## machine-id初期化
+
+```bash
+sudo truncate -s 0 /etc/machine-id
+
+sudo rm -f /var/lib/dbus/machine-id
+
+sudo ln -s /etc/machine-id /var/lib/dbus/machine-id
+```
+
+## ディスク使用量確認
+
+```bash
+df -h
+```
+
+## Golden Masterをシャットダウン
+
+```bash
+sudo poweroff
 ```
 
