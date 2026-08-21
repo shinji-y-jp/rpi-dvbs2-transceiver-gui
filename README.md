@@ -676,7 +676,7 @@ The recommended default operating configuration is:
 
 ```text
 Symbol Rate : 333 kSym/s
-MODCOD      : QPSK 1/2
+MODCOD      : QPSK 3/4
 Pilot       : ON
 Roll-off    : 0.20
 RX Watchdog : ON
@@ -692,7 +692,7 @@ This configuration is intended as the normal starting point for operation and te
 
 ```text
 Symbol Rate : 333 kSym/s
-MODCOD      : QPSK 1/2
+MODCOD      : QPSK 3/4
 Pilot       : ON
 Roll-off    : 0.20
 RX Watchdog : ON
