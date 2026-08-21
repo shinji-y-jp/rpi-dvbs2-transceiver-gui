@@ -496,7 +496,7 @@ The default operating condition of this script is:
 
 ```text
 Symbol Rate : 1 MSym/s
-MODCOD      : QPSK 1/2
+MODCOD      : QPSK 3/4
 Pilot       : ON
 ```
 
@@ -601,7 +601,7 @@ ALSA input  : hw:2,0
 
 ```text
 Symbol Rate : 1 MSym/s
-MODCOD      : QPSK 1/2
+MODCOD      : QPSK 3/4
 Pilot       : ON
 ```
 
