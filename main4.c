@@ -125,6 +125,8 @@
 	 gtk_combo_box_set_active(GTK_COMBO_BOX(ad->cmb_sr), 4);
 	} else if (g_strcmp0(ad->symbol_rate, "2000000") == 0) {
 	 gtk_combo_box_set_active(GTK_COMBO_BOX(ad->cmb_sr), 5);
+	} else if (g_strcmp0(ad->symbol_rate, "4000000") == 0) {
+	 gtk_combo_box_set_active(GTK_COMBO_BOX(ad->cmb_sr), 6);
 	} else {
 	 gtk_combo_box_set_active(GTK_COMBO_BOX(ad->cmb_sr), 2);
 	}
@@ -549,6 +551,7 @@ static void launch_rx_command(AppData *ad)
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ad->cmb_sr), "1000000");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ad->cmb_sr), "1500000");
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ad->cmb_sr), "2000000");
+	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ad->cmb_sr), "4000000");
 	gtk_combo_box_set_active(GTK_COMBO_BOX(ad->cmb_sr), 2);
 	
 	gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(ad->cmb_rolloff), "0.20");
