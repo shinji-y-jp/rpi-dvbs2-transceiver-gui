@@ -389,9 +389,19 @@ Other configurations may work, but they are not part of the officially supported
 
 The following configurations are **not part of the officially supported KISS appliance**, but have been demonstrated experimentally in real operation.
 
+The basic design philosophy remains simple:
+
+**KISS — Keep It Simple.**
+
+The purpose of these experiments is not to support every possible hardware configuration.
+
+The purpose is to verify practical, inexpensive and reproducible DATV configurations using real hardware.
+
+---
+
 ## Low-Cost Webcam with Raspberry Pi 5 Software H.264 Encoding
 
-A low-cost USB webcam without an H.264 hardware encoder has been successfully used.
+A low-cost USB webcam without an H.264 hardware encoder has been successfully used for live DVB-S2 transmission.
 
 The webcam provides uncompressed YUYV video.
 
@@ -447,7 +457,7 @@ However, this configuration remains experimental and is **not officially support
 
 ---
 
-# Experimental Mono Audio Transmission
+## Experimental Mono Audio Transmission
 
 A second experimentally verified configuration adds mono audio to the low-cost webcam software-encoding system.
 
@@ -509,10 +519,562 @@ This configuration is an experimental demonstration and is not part of the offic
 
 ---
 
+# Raspberry Pi 4 DVB-S2 Receiver Test
+
+The GNU Radio DVB-S2 receiver has now also been successfully tested on a Raspberry Pi 4.
+
+Test system:
+
+```text
+Raspberry Pi 4
+Raspberry Pi OS 64-bit Desktop
+GNU Radio DVB-S2 receiver
+Pluto / Pluto Plus
+2.4 GHz
+```
+
+Confirmed reception:
+
+```text
+333 kSym/s
+QPSK 3/4
+```
+
+and:
+
+```text
+1 MSym/s
+8PSK 3/5
+```
+
+Stable live video reception was confirmed.
+
+At 1 MSym/s / 8PSK 3/5, the Raspberry Pi 4 still showed practical CPU and memory headroom.
+
+Observed memory usage was approximately:
+
+```text
+1.2 - 1.3 GB
+```
+
+on a Raspberry Pi 4 with approximately 4 GB RAM.
+
+An operating temperature of approximately:
+
+```text
+53.5 degrees C
+```
+
+was observed with a small heatsink.
+
+The important result is that a Raspberry Pi 5 is **not required for DVB-S2 reception at these tested conditions**.
+
+The Raspberry Pi 4 remains a practical platform for this GNU Radio DVB-S2 receiver.
+
+Result:
+
+```text
+Raspberry Pi 4 RX: It works.
+```
+
+The result was also shared with the BATC community together with screenshots showing actual live reception and htop measurements.
+
+---
+
+# Planned Raspberry Pi 4 H.264 Hardware Encoding Experiment
+
+The Raspberry Pi 4 is also interesting because it provides hardware-assisted H.264 video encoding capability.
+
+The Raspberry Pi 5 has substantially more CPU performance, but for DATV raw CPU performance is not the only consideration.
+
+Dedicated video hardware can be very useful.
+
+A future Raspberry Pi 4 transmission experiment will therefore use:
+
+```text
+USB webcam
+        |
+        | YUYV
+        v
+Raspberry Pi 4
+        |
+        | H.264 hardware encoding
+        v
+MPEG Transport Stream
+        |
+        v
+GNU Radio / gr-dvbs2
+        |
+        v
+Pluto / Pluto Plus
+        |
+        v
+DVB-S2 RF
+```
+
+The first tests will use relatively low symbol rates.
+
+For example:
+
+```text
+333 kSym/s
+QPSK
+Pilot ON
+```
+
+The purpose is to determine how far a slower CPU can go when video encoding is handled by dedicated hardware.
+
+This experiment has **not yet been completed**.
+
+No transmission result is claimed at this stage.
+
+---
+
+# Planned Orange Pi 3B H.265 Experiment
+
+An Orange Pi 3B with a Rockchip RK3566 SoC will be evaluated as a low-cost H.265 / HEVC DVB-S2 transmitter.
+
+The Orange Pi 3B under test is a 2 GB model.
+
+The main reason for selecting this board is not raw CPU performance.
+
+The main interest is the Rockchip VPU and its H.265 hardware video processing capability.
+
+The planned processing path is:
+
+```text
+USB webcam
+        |
+        | YUYV
+        v
+Orange Pi 3B
+RK3566
+        |
+        | Rockchip VPU
+        | H.265 / HEVC hardware encoding
+        | FFmpeg / RKMPP
+        v
+MPEG Transport Stream
+        |
+        v
+GNU Radio / gr-dvbs2
+        |
+        v
+Pluto Plus
+        |
+        v
+DVB-S2 RF
+```
+
+The receiving side will use the Raspberry Pi 4 system that has already been successfully tested.
+
+The planned end-to-end configuration is:
+
+```text
+TX : Orange Pi 3B
+     RK3566
+     H.265 hardware encoding
+     GNU Radio DVB-S2
+
+             |
+             | DVB-S2 RF
+             v
+
+RX : Raspberry Pi 4
+     GNU Radio DVB-S2 receiver
+     H.265 decoding
+     Live video
+```
+
+This keeps transmission and reception completely separate.
+
+One SBC performs one primary task.
+
+This follows the KISS design philosophy.
+
+---
+
+## Orange Pi 3B Test Procedure
+
+The Orange Pi experiment will be performed step by step.
+
+The first step is simply to confirm the operating system and architecture.
+
+```bash
+uname -m
+```
+
+Expected result:
+
+```text
+aarch64
+```
+
+Next, Rockchip MPP / RKMPP support will be investigated.
+
+A possible source is:
+
+```text
+https://github.com/rockchip-linux/mpp
+```
+
+A Rockchip-compatible FFmpeg implementation will also be evaluated.
+
+One candidate is:
+
+```text
+https://github.com/nyanmisaka/ffmpeg-rockchip
+```
+
+The exact build procedure will be determined after the actual Orange Pi 3B hardware arrives and the installed kernel and operating system are confirmed.
+
+The FFmpeg encoder list will then be checked with:
+
+```bash
+ffmpeg -encoders | grep rkmpp
+```
+
+The desired H.265 hardware encoder is expected to appear as something similar to:
+
+```text
+hevc_rkmpp
+```
+
+H.264 hardware encoding may also appear as:
+
+```text
+h264_rkmpp
+```
+
+---
+
+## H.265 Hardware Encoding Test
+
+Before GNU Radio is added, H.265 hardware encoding will be tested independently.
+
+The first test will use a low-resolution USB webcam.
+
+Possible initial conditions:
+
+```text
+Resolution : 400x300 or 640x480
+Frame rate : 20 fps
+Codec      : H.265 / HEVC
+Encoder    : Rockchip VPU / RKMPP
+```
+
+The important measurements will include:
+
+```text
+CPU load
+Memory usage
+VPU operation
+Low-bitrate image quality
+Latency
+Encoder stability
+Long-term operation
+```
+
+The purpose is to confirm that the H.265 encoding load is handled by the VPU instead of consuming large amounts of CPU time.
+
+---
+
+## GNU Radio DVB-S2 Transmission Test
+
+After H.265 hardware encoding has been confirmed, the next stage will be:
+
+```text
+H.265 / HEVC
+      |
+      v
+MPEG Transport Stream
+      |
+      v
+GNU Radio / gr-dvbs2
+      |
+      v
+Pluto Plus
+      |
+      v
+DVB-S2 RF
+```
+
+The first DVB-S2 test will use:
+
+```text
+333 kSym/s
+```
+
+If successful, higher symbol rates will be tested.
+
+Possible progression:
+
+```text
+333 kSym/s
+      |
+      v
+1 MSym/s
+      |
+      v
+2 MSym/s
+```
+
+The practical upper limit will be determined experimentally.
+
+No assumption will be made before real measurements are available.
+
+---
+
+## Final H.265 End-to-End Test
+
+The final experiment will be:
+
+```text
+USB webcam
+    |
+    v
+Orange Pi 3B
+    |
+    | RK3566 VPU
+    | H.265 hardware encoding
+    v
+MPEG Transport Stream
+    |
+    v
+GNU Radio DVB-S2 TX
+    |
+    v
+Pluto Plus
+    |
+    | RF
+    v
+Pluto / Pluto Plus
+    |
+    v
+Raspberry Pi 4
+    |
+    | GNU Radio DVB-S2 RX
+    v
+H.265 decode
+    |
+    v
+Live video
+```
+
+Only after this complete path has been confirmed in actual operation will H.265 DVB-S2 transmission be considered successfully demonstrated.
+
+Until then:
+
+```text
+Orange Pi 3B H.265 DVB-S2 TX
+= NOT YET VERIFIED
+```
+
+If successful, a separate experimental script will be added.
+
+Tentative name:
+
+```text
+experiment.sh.h265
+```
+
+The exact implementation and filename may change after real hardware testing.
+
+---
+
+# KISS Design Philosophy
+
+The project intentionally does not attempt to support every possible SBC, SDR, webcam, operating system and codec.
+
+The basic principle is:
+
+```text
+Keep It Simple.
+```
+
+and:
+
+```text
+One application
+One SDR
+One primary task
+```
+
+Transmission and reception do not need to run simultaneously on the same SBC.
+
+This reduces:
+
+```text
+CPU contention
+Memory pressure
+I/O complexity
+Driver complexity
+Debugging difficulty
+Maintenance burden
+```
+
+A simple system is easier to:
+
+```text
+understand
+test
+debug
+modify
+port
+maintain
+```
+
+New hardware can be evaluated without redesigning the entire project.
+
+If a new SBC works:
+
+```text
+Test it.
+Measure it.
+Add a script if necessary.
+Update the README.
+Publish the result.
+```
+
+That is enough.
+
+---
+
+# Hardware Is Replaceable
+
+The hardware platform will change over time.
+
+Today it may be:
+
+```text
+Raspberry Pi 4
+Raspberry Pi 5
+Orange Pi 3B
+Pluto
+Pluto Plus
+```
+
+Tomorrow it may be something else.
+
+The reusable foundation is:
+
+```text
+Linux
+GNU Radio
+FFmpeg
+gr-dvbs2
+Git
+GitHub
+Open Source
+```
+
+The SBC is replaceable.
+
+The software, knowledge and experimental results can remain.
+
+Affordable hardware that performs the required job is welcome.
+
+---
+
+# Current Experimental Status
+
+Verified:
+
+```text
+Raspberry Pi 5
++ low-cost YUYV webcam
++ libx264 software H.264
++ GNU Radio DVB-S2 TX
++ Pluto Plus
+= WORKS
+```
+
+Verified:
+
+```text
+Raspberry Pi 5
++ low-cost webcam
++ mono MP2 audio
++ GNU Radio DVB-S2 TX
++ Pluto Plus
+= WORKS
+```
+
+Verified:
+
+```text
+Raspberry Pi 4
++ GNU Radio DVB-S2 RX
++ 333 kSym/s QPSK 3/4
+= WORKS
+```
+
+Verified:
+
+```text
+Raspberry Pi 4
++ GNU Radio DVB-S2 RX
++ 1 MSym/s 8PSK 3/5
+= WORKS
+```
+
+Not yet tested:
+
+```text
+Raspberry Pi 4
++ H.264 hardware encoding
++ GNU Radio DVB-S2 TX
+= NOT YET TESTED
+```
+
+Not yet tested:
+
+```text
+Orange Pi 3B
++ RK3566 VPU
++ H.265 hardware encoding
++ GNU Radio DVB-S2 TX
++ Pluto Plus
+= NOT YET TESTED
+```
+
+Planned end-to-end experiment:
+
+```text
+Orange Pi 3B
+H.265 DVB-S2 TX
+        |
+        | RF
+        v
+Raspberry Pi 4
+DVB-S2 RX
+        |
+        v
+H.265 Live Video
+```
+
+The final criterion remains simple:
+
+```text
+Result: It works.
+```
+
+---
+
 # 実験的に動作確認した構成
 
 以下は正式なKISSアプライアンス構成には含まれませんが、
 **実機で動作確認した構成**です。
+
+基本思想は変わりません。
+
+**KISS — Keep It Simple.**
+
+すべてのハードウェアへ対応することを目的にはしていません。
+
+安価で、実際に動き、再現可能なDATV構成を実機で確認することを目的としています。
+
+---
 
 ## 安価なWebカメラ＋Raspberry Pi 5ソフトウェアH.264エンコード
 
@@ -522,7 +1084,7 @@ DVB-S2ライブ映像送信に成功しています。
 WebカメラからYUYV映像を取得し、
 Raspberry Pi 5上のFFmpeg / libx264でH.264へソフトウェアエンコードします。
 
-処理経路は、
+処理経路：
 
 ```text
 安価なUSB Webカメラ
@@ -545,8 +1107,6 @@ Pluto Plus
         v
 DVB-S2 RF
 ```
-
-です。
 
 動作確認済み実験スクリプト：
 
@@ -614,6 +1174,634 @@ Pilot       : ON
 この構成も正式サポートではなく、
 実験的な動作確認例として提供します。
 
+---
+
+# Raspberry Pi 4 DVB-S2受像
+
+GNU Radio DVB-S2受信機を、
+
+```text
+Raspberry Pi 4
+Raspberry Pi OS 64-bit Desktop
+```
+
+でも実機確認しました。
+
+確認済み条件：
+
+```text
+333 kSym/s
+QPSK 3/4
+2.4 GHz
+```
+
+さらに、
+
+```text
+1 MSym/s
+8PSK 3/5
+2.4 GHz
+```
+
+でも受像に成功しました。
+
+1 MSym/s / 8PSK 3/5でも、
+安定したライブ映像受像を確認しています。
+
+メモリ使用量は概ね、
+
+```text
+約1.2～1.3 GB
+```
+
+でした。
+
+CPUにも実用上の余裕があります。
+
+小型ヒートシンク使用時には、
+
+```text
+約53.5℃
+```
+
+という温度を確認しました。
+
+この結果から、今回確認した条件では、
+
+**DVB-S2受像にRaspberry Pi 5は必須ではありません。**
+
+Raspberry Pi 4でも十分実用的に受像できます。
+
+Result:
+
+```text
+Raspberry Pi 4 RX: It works.
+```
+
+この結果は、
+実受像画面およびhtopのスクリーンショットとともに
+BATCコミュニティへ投稿しました。
+
+---
+
+# Raspberry Pi 4 H.264ハードウェアエンコード実験予定
+
+Raspberry Pi 4にはH.264映像処理用の専用ハードウェアがあります。
+
+Pi 5はCPU性能では大幅に高速ですが、
+DATVではCPU性能だけが重要ではありません。
+
+専用映像ハードウェアを利用することで、
+遅いCPUでも十分な性能を得られる可能性があります。
+
+予定している送信経路：
+
+```text
+USB Webカメラ
+        |
+        | YUYV
+        v
+Raspberry Pi 4
+        |
+        | H.264ハードウェアエンコード
+        v
+MPEG Transport Stream
+        |
+        v
+GNU Radio / gr-dvbs2
+        |
+        v
+Pluto / Pluto Plus
+        |
+        v
+DVB-S2 RF
+```
+
+最初は、
+
+```text
+333 kSym/s
+QPSK
+Pilot ON
+```
+
+程度から確認します。
+
+目的はPi 5とCPU性能を競うことではありません。
+
+```text
+遅いCPU
++
+専用VPU
+```
+
+で、どこまでDATVを実現できるかを見る実験です。
+
+この送信実験はまだ未確認です。
+
+---
+
+# Orange Pi 3B + H.265 実験予定
+
+Orange Pi 3B / RK3566を、
+安価なH.265 / HEVC DVB-S2送信機として評価する予定です。
+
+使用するOrange Pi 3Bは2GBモデルです。
+
+このボードを選んだ最大の理由は、
+CPU性能そのものではありません。
+
+狙いは、
+
+**RK3566 VPUによるH.265 / HEVCハードウェアエンコード**
+
+です。
+
+予定している処理経路：
+
+```text
+USB Webカメラ
+        |
+        | YUYV
+        v
+Orange Pi 3B
+RK3566
+        |
+        | Rockchip VPU
+        | H.265 / HEVCハードウェアエンコード
+        | FFmpeg / RKMPP
+        v
+MPEG Transport Stream
+        |
+        v
+GNU Radio / gr-dvbs2
+        |
+        v
+Pluto Plus
+        |
+        v
+DVB-S2 RF
+```
+
+受信側には、
+すでに動作確認できたRaspberry Pi 4を使用します。
+
+予定構成：
+
+```text
+送信 : Orange Pi 3B
+       RK3566
+       H.265 Hardware Encode
+       GNU Radio DVB-S2
+
+               |
+               | DVB-S2 RF
+               v
+
+受信 : Raspberry Pi 4
+       GNU Radio DVB-S2
+       H.265 Decode
+       Live Video
+```
+
+送受信を同じSBCで同時には行いません。
+
+```text
+Orange Pi 3B = 送信
+Raspberry Pi 4 = 受信
+```
+
+1台1役です。
+
+KISSです。
+
+---
+
+## Orange Pi 3B 到着後の確認
+
+まず64bit Linuxを確認します。
+
+```bash
+uname -m
+```
+
+期待する結果：
+
+```text
+aarch64
+```
+
+次にRockchip MPP / RKMPPを確認します。
+
+候補：
+
+```text
+https://github.com/rockchip-linux/mpp
+```
+
+さらにRockchip対応FFmpegを評価します。
+
+候補：
+
+```text
+https://github.com/nyanmisaka/ffmpeg-rockchip
+```
+
+正確なビルド手順は、
+Orange Pi 3B実機到着後にOSおよびカーネルを確認して決定します。
+
+エンコーダーは、
+
+```bash
+ffmpeg -encoders | grep rkmpp
+```
+
+で確認します。
+
+H.265 / HEVCでは、
+
+```text
+hevc_rkmpp
+```
+
+のようなエンコーダーが利用できることを期待しています。
+
+H.264では、
+
+```text
+h264_rkmpp
+```
+
+が利用可能な場合もあります。
+
+---
+
+## H.265単独試験
+
+最初からGNU Radioまで全部動かしません。
+
+まず、
+
+```text
+USB Webカメラ
+        |
+        v
+RK3566 VPU
+        |
+        v
+H.265
+```
+
+だけを確認します。
+
+初期条件候補：
+
+```text
+解像度     : 400x300 または 640x480
+フレーム率 : 20 fps
+Codec      : H.265 / HEVC
+Encoder    : Rockchip VPU / RKMPP
+```
+
+確認項目：
+
+```text
+CPU負荷
+メモリ使用量
+VPU動作
+低ビットレート画質
+遅延
+安定性
+長時間動作
+```
+
+狙いは、
+H.265圧縮処理をCPUではなくVPUへ任せることです。
+
+---
+
+## GNU Radio DVB-S2送信
+
+H.265ハードウェアエンコードが安定した後、
+
+```text
+H.265
+↓
+MPEG-TS
+↓
+GNU Radio / gr-dvbs2
+↓
+Pluto Plus
+↓
+DVB-S2 RF
+```
+
+へ進みます。
+
+最初は、
+
+```text
+333 kSym/s
+```
+
+から試します。
+
+成功すれば、
+
+```text
+333 kSym/s
+↓
+1 MSym/s
+↓
+2 MSym/s
+```
+
+と上げます。
+
+実用上限は実測で判断します。
+
+到着前に上限を決めつけることはしません。
+
+---
+
+## 最終H.265送受信実験
+
+最終的な実験構成：
+
+```text
+USB Webカメラ
+    |
+    v
+Orange Pi 3B
+    |
+    | RK3566 VPU
+    | H.265 Hardware Encode
+    v
+MPEG Transport Stream
+    |
+    v
+GNU Radio DVB-S2 TX
+    |
+    v
+Pluto Plus
+    |
+    | RF
+    v
+Pluto / Pluto Plus
+    |
+    v
+Raspberry Pi 4
+    |
+    | GNU Radio DVB-S2 RX
+    v
+H.265 Decode
+    |
+    v
+Live Video
+```
+
+ここまで実際に通って初めて、
+
+```text
+Result: It works.
+```
+
+とします。
+
+現時点では、
+
+```text
+Orange Pi 3B
++ H.265 Hardware Encode
++ GNU Radio DVB-S2 TX
+= NOT YET VERIFIED
+```
+
+です。
+
+Orange Pi 3Bはまだ到着していないため、
+現時点でH.265 DVB-S2送信成功とはしません。
+
+---
+
+## H.265実験用スクリプト
+
+実験が成功した場合は、
+
+```text
+experiment.sh.h265
+```
+
+のような独立した実験用スクリプトを追加する予定です。
+
+正式なKISS構成へ無理に統合せず、
+必要な機能だけを追加します。
+
+---
+
+# KISS
+
+基本は、
+
+```text
+Keep It Simple.
+```
+
+です。
+
+さらに、
+
+```text
+1 application
+1 SDR
+1 primary task
+```
+
+を基本とします。
+
+送信と受信を一台へ全部詰め込みません。
+
+これによって、
+
+```text
+CPU競合
+メモリ不足
+I/O競合
+ドライバ依存
+デバッグの複雑化
+保守負担
+```
+
+を減らします。
+
+簡単なシステムは、
+
+```text
+理解しやすい
+試験しやすい
+故障箇所を切り分けやすい
+移植しやすい
+変更しやすい
+保守しやすい
+```
+
+という利点があります。
+
+新しいSBCが出た場合も、
+
+```text
+実機で試す
+測る
+必要ならスクリプトを追加する
+READMEへ追記する
+結果を公開する
+```
+
+それで十分です。
+
+---
+
+# Hardware Is Replaceable
+
+ハードウェアは変わります。
+
+現在は、
+
+```text
+Raspberry Pi 4
+Raspberry Pi 5
+Orange Pi 3B
+Pluto
+Pluto Plus
+```
+
+を使っています。
+
+将来は別のSBCやSDRになるかもしれません。
+
+しかし、
+
+```text
+Linux
+GNU Radio
+FFmpeg
+gr-dvbs2
+Git
+GitHub
+Open Source
+```
+
+というソフトウェア資産は残ります。
+
+SBCそのものは交換可能です。
+
+重要なのは、
+
+```text
+Code
+Knowledge
+Measurements
+Reproducible results
+```
+
+です。
+
+安価で、
+使えて、
+面白いハードウェアなら、
+
+Welcome.
+
+---
+
+# 現在の実験状況
+
+確認済み：
+
+```text
+Raspberry Pi 5
++ 安価なYUYV Webカメラ
++ libx264 Software H.264
++ GNU Radio DVB-S2 TX
++ Pluto Plus
+= WORKS
+```
+
+確認済み：
+
+```text
+Raspberry Pi 5
++ 安価なWebカメラ
++ MP2 Mono Audio
++ GNU Radio DVB-S2 TX
++ Pluto Plus
+= WORKS
+```
+
+確認済み：
+
+```text
+Raspberry Pi 4
++ GNU Radio DVB-S2 RX
++ 333 kSym/s QPSK 3/4
+= WORKS
+```
+
+確認済み：
+
+```text
+Raspberry Pi 4
++ GNU Radio DVB-S2 RX
++ 1 MSym/s 8PSK 3/5
+= WORKS
+```
+
+未確認：
+
+```text
+Raspberry Pi 4
++ H.264 Hardware Encode
++ GNU Radio DVB-S2 TX
+= NOT YET TESTED
+```
+
+未確認：
+
+```text
+Orange Pi 3B
++ RK3566 VPU
++ H.265 Hardware Encode
++ GNU Radio DVB-S2 TX
++ Pluto Plus
+= NOT YET VERIFIED
+```
+
+最終目標：
+
+```text
+Orange Pi 3B
+H.265 DVB-S2 TX
+        |
+        | RF
+        v
+Raspberry Pi 4
+DVB-S2 RX
+        |
+        v
+H.265 Live Video
+```
+
+実機で確認するまでは成功とはしません。
+
+```text
+Result first.
+Screenshot next.
+Code follows.
+```
+
+73,
+
+Shinji
 ---
 
 # Not Officially Supported
