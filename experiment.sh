@@ -273,57 +273,57 @@ time.sleep(10**9)
 
     log "start FFmpeg"
 
-    timeout "${TX_SECONDS}" \
-    ffmpeg \
-        -hide_banner \
-        -y \
-        -loglevel warning \
-        \
-        -thread_queue_size 1024 \
-        -f v4l2 \
-        -input_format yuyv422 \
-        -video_size 400x300 \
-        -framerate 20 \
-        -i "${CAM}" \
-        \
-        -thread_queue_size 1024 \
-        -f alsa \
-        -ac 2 \
-        -ar "${SR}" \
-        -i hw:2,0 \
-        \
-        -vf "scale=800:480,format=yuv420p" \
-        \
-        -c:v libx264 \
-        -preset ultrafast \
-        -tune zerolatency \
-        -profile:v baseline \
-        -level 3.0 \
-        \
-        -g 15 \
-        -keyint_min 15 \
-        -sc_threshold 0 \
-        \
-        -b:v "${VBIT}" \
-        -minrate "${VBIT}" \
-        -maxrate "${VBIT}" \
-        -bufsize "${BUFSIZE}" \
-        \
-        -c:a mp2 \
-        -b:a "${ABIT}" \
-        -ac 2 \
-        -ar "${SR}" \
-        \
-        -muxrate "${MUXRATE}" \
-        -mpegts_flags resend_headers \
-        -muxdelay 0 \
-        -muxpreload 0 \
-        \
-        -f mpegts \
-        "${FIFO}" \
-        > /tmp/ffmpeg.log 2>&1 &
-
+timeout "${TX_SECONDS}" \
+ffmpeg \
+    -hide_banner \
+    -y \
+    -loglevel warning \
+    \
+    -thread_queue_size 1024 \
+    -f v4l2 \
+    -input_format yuyv422 \
+    -video_size 960x720 \
+    -framerate 20 \
+    -i "${CAM}" \
+    \
+    -thread_queue_size 1024 \
+    -f alsa \
+    -ac 2 \
+    -ar "${SR}" \
+    -i hw:2,0 \
+    \
+    -vf "format=yuv420p" \
+    \
+    -c:v libx265 \
+    -preset medium \
+    -tune zerolatency \
+    -profile:v main \
+    \
+    -g 15 \
+    -keyint_min 15 \
+    -sc_threshold 0 \
+    \
+    -b:v "${VBIT}" \
+    -minrate "${VBIT}" \
+    -maxrate "${VBIT}" \
+    -bufsize "${BUFSIZE}" \
+    \
+    -c:a mp2 \
+    -b:a "${ABIT}" \
+    -ac 2 \
+    -ar "${SR}" \
+    \
+    -muxrate "${MUXRATE}" \
+    -mpegts_flags +resend_headers \
+    -muxdelay 0 \
+    -muxpreload 0 \
+    \
+    -f mpegts \
+    "${FIFO}" \
+    > /tmp/ffmpeg.log 2>&1 &
+    
     FFMPEG_PID=$!
+
 
 
     wait "${FFMPEG_PID}" || true
