@@ -89,6 +89,10 @@ class dvbs2_tx_rx(gr.top_block):
 #        self.iio_pluto_sink_0 = iio.fmcomms2_sink_fc32('' if '' else iio.get_pluto_uri(), [True, True], 32768, False)
 #        self.iio_pluto_sink_0 = iio.fmcomms2_sink_fc32('' if '' else iio.get_pluto_uri(192.168.2.1), [True, True], 32768, False)
         self.iio_pluto_sink_0 = iio.fmcomms2_sink_fc32('usb:',[True, True],131072,False)
+#         self.iio_pluto_sink_0 = iio.fmcomms2_sink_fc32(
+#              'ip:192.168.2.20', [True, True], 131072, False   # IP stream Pluto+ URL : 192.168.2.20
+#         )
+
 #        self.iio_pluto_sink_0 = iio.fmcomms2_sink_fc32(
 #            iio.get_pluto_uri(),
 #            [True, True],
