@@ -282,7 +282,7 @@ ffmpeg \
     -thread_queue_size 1024 \
     -f v4l2 \
     -input_format yuyv422 \
-    -video_size 800x448 \
+    -video_size 960x720 \
     -framerate 20 \
     -i "${CAM}" \
     \
@@ -295,7 +295,7 @@ ffmpeg \
     -vf "format=yuv420p" \
     \
     -c:v libx265 \
-    -preset fast \
+    -preset medium \
     -tune zerolatency \
     -profile:v main \
     \
