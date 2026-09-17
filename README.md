@@ -1,8 +1,3 @@
-<img width="2720" height="1080" alt="20260821_07h47m46s_grim" src="https://github.com/user-attachments/assets/fdcab640-5e55-4708-9a29-28ccea2d7b8e" />
-<img width="2720" height="1080" alt="20260823_11h09m40s_grim" src="https://github.com/user-attachments/assets/f5d482a1-900f-45de-b3e9-8342b6dfc8ee" />
-<img width="2720" height="1080" alt="20260823_11h09m46s_grim" src="https://github.com/user-attachments/assets/12c6d2bd-54e6-4ca7-9fdd-60e9471055f0" />
-<img width="1920" height="1080" alt="20260827_16h24m52s_grim" src="https://github.com/user-attachments/assets/9a856d98-e809-43ee-ad7e-d3843c1638db" />
-
 # Raspberry Pi 5 KISS H.265 DVB-S2 Transceiver
 
 A simple H.265 / HEVC DVB-S2 transmitter and receiver for Raspberry Pi 5 using GNU Radio, FFmpeg, libx265 and Pluto Plus.
