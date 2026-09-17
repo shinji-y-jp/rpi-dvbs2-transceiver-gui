@@ -282,7 +282,7 @@ ffmpeg \
     -thread_queue_size 1024 \
     -f v4l2 \
     -input_format yuyv422 \
-    -video_size 960x720 \
+    -video_size 800x448 \
     -framerate 20 \
     -i "${CAM}" \
     \
@@ -295,13 +295,12 @@ ffmpeg \
     -vf "format=yuv420p" \
     \
     -c:v libx265 \
-    -preset medium \
+    -preset fast \
     -tune zerolatency \
     -profile:v main \
     \
     -g 15 \
     -keyint_min 15 \
-    -sc_threshold 0 \
     \
     -b:v "${VBIT}" \
     -minrate "${VBIT}" \
@@ -315,8 +314,6 @@ ffmpeg \
     \
     -muxrate "${MUXRATE}" \
     -mpegts_flags +resend_headers \
-    -muxdelay 0 \
-    -muxpreload 0 \
     \
     -f mpegts \
     "${FIFO}" \
