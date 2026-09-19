@@ -2430,6 +2430,410 @@ Result first.
 Screenshot next.
 Code follows.
 ```
+# 125 kS/s Super-Narrow H.265 DVB-S2 Experiment
+
+<img width="1920" height="1080" alt="fig-4" src="https://github.com/user-attachments/assets/0226111e-1777-4c26-b6e6-331eb090abda" />
+<img width="1920" height="1080" alt="fig-1" src="https://github.com/user-attachments/assets/b2b29ee7-cf9b-420f-bbf8-c759762715a7" />
+<img width="1920" height="1080" alt="fig-2" src="https://github.com/user-attachments/assets/a33f4280-af37-4271-b68f-925bdb3f7c43" />
+<img width="1920" height="1080" alt="fig-3" src="https://github.com/user-attachments/assets/cbac0fa4-4b66-4226-a11d-d89f71518670" />
+
+
+
+This is an experimental DVB-S2 transmitter configuration for very low symbol rates using software H.265 encoding on a Raspberry Pi 5.
+
+The main tested configuration is:
+
+- 125 kS/s
+- QPSK 3/4
+- H.265 / HEVC
+- 800x448
+- 15 fps
+- MP2 audio
+- GNU Radio DVB-S2
+- Pluto Plus
+
+The camera used in this experiment is a Logitech C920.
+
+The C920 internal H.264 encoder is **not** used.
+
+Video is captured as YUYV422 and encoded to H.265 entirely in software using `libx265` on the Raspberry Pi 5.
+
+---
+
+## File
+
+```text
+experiment.sh.125.supernarrow
+```
+
+---
+
+## Tested Configuration
+
+```text
+Platform       : Raspberry Pi 5
+Camera         : Logitech C920
+Camera input   : YUYV422
+Video codec    : H.265 / HEVC
+Encoder        : libx265 software encoder
+Resolution     : 800x448
+Frame rate     : 15 fps
+
+DVB-S2         : QPSK 3/4
+Symbol rate    : 125000 symbols/s
+SPS            : 4
+
+Video bitrate  : 110 kb/s
+Audio codec    : MP2
+Audio bitrate  : 24 kb/s
+Audio rate     : 22050 Hz
+TS mux rate    : 182 kb/s
+
+SDR            : Pluto Plus
+GNU Radio      : gr-dvbs2
+```
+
+This configuration has been tested successfully with stable transmission and reception.
+
+---
+
+## 125 kS/s Presets
+
+The script contains the following experimental 125 kS/s settings:
+
+| MODCOD | Video bitrate | TS mux rate |
+|---|---:|---:|
+| QPSK 1/4 | 20 kb/s | 52 kb/s |
+| QPSK 1/2 | 65 kb/s | 114 kb/s |
+| QPSK 3/4 | 110 kb/s | 182 kb/s |
+| 8PSK 3/5 | 140 kb/s | 219 kb/s |
+
+The main tested configuration is:
+
+```text
+QPSK 3/4
+125 kS/s
+800x448
+15 fps
+H.265 video 110 kb/s
+MP2 audio 24 kb/s
+TS mux rate 182 kb/s
+```
+
+QPSK 1/4 is highly experimental because very little bitrate remains after including 24 kb/s MP2 audio.
+
+---
+
+## Example
+
+2400 MHz / QPSK 3/4 / 125 kS/s:
+
+```bash
+chmod +x experiment.sh.125supernarrow
+
+./experiment.sh.125supernarrow \
+    2400000000 \
+    QPSK3/4 \
+    125000
+```
+
+1295 MHz / QPSK 3/4 / 125 kS/s:
+
+```bash
+./experiment.sh.125supernarrow \
+    1295000000 \
+    QPSK3/4 \
+    125000
+```
+
+---
+
+## Signal Chain
+
+```text
+Logitech C920
+     |
+     | YUYV422
+     v
+FFmpeg
+     |
+     | libx265 software H.265
+     | MP2 audio
+     v
+MPEG Transport Stream
+     |
+     | FIFO: /tmp/in.ts
+     v
+GNU Radio / gr-dvbs2
+     |
+     v
+Pluto Plus
+     |
+     v
+DVB-S2 RF
+```
+
+---
+
+## FFmpeg Settings
+
+The important FFmpeg video settings are:
+
+```text
+Input format : YUYV422
+Resolution   : 800x448
+Frame rate   : 15 fps
+Codec        : libx265
+Preset       : medium
+Tune         : zerolatency
+Profile      : main
+```
+
+For the tested QPSK 3/4 configuration:
+
+```text
+Video bitrate : 110 kb/s
+Audio bitrate : 24 kb/s
+Audio rate    : 22050 Hz
+Mux rate      : 182 kb/s
+```
+
+The video encoder is configured for constant low-bitrate operation:
+
+```text
+-b:v 110k
+-minrate 110k
+-maxrate 110k
+-bufsize 220k
+```
+
+---
+
+## Audio
+
+Audio is encoded as MP2:
+
+```text
+Codec      : MP2
+Bitrate    : 24 kb/s
+Sample rate: 22050 Hz
+Channels   : 2
+```
+
+The current script uses:
+
+```text
+ALSA device: hw:2,0
+```
+
+This may need to be changed depending on the audio device configuration.
+
+---
+
+## DVB-S2 Parameters
+
+For the stable 125 kS/s test:
+
+```text
+Frequency   : 2400 MHz
+MODCOD      : QPSK 3/4
+Symbol rate : 125000
+SPS         : 4
+Roll-off    : 0.20
+```
+
+The transmitter is based on GNU Radio and `gr-dvbs2`.
+
+The SDR used in this test is Pluto Plus.
+
+---
+
+## RF Spectrum
+
+At 125 kS/s the occupied RF bandwidth is very narrow compared with the higher symbol-rate configurations.
+
+This makes H.265 especially interesting because useful live video can still be transmitted at a very low information bitrate.
+
+---
+
+## Why 125 kS/s?
+
+The purpose of this experiment is not maximum picture quality.
+
+The purpose is to investigate how far the DVB-S2 symbol rate can be reduced while still carrying usable live video and audio.
+
+At higher symbol rates there is enough bandwidth for H.264 or higher video bitrates.
+
+At very low symbol rates, codec efficiency becomes much more important.
+
+This is where H.265 becomes particularly useful.
+
+---
+
+## Stability
+
+The tested QPSK 3/4 configuration has shown stable transmission and reception at:
+
+```text
+125 kS/s
+800x448
+15 fps
+H.265 110 kb/s
+MP2 24 kb/s
+```
+
+The receiver watchdog may still restart the DVB-S2 receive pipeline if transport-stream data stalls.
+
+This is part of the current experimental receiver design.
+
+---
+
+## Script Behaviour
+
+The transmitter operates in repeated cycles.
+
+Default values:
+
+```text
+TX time    : 480 seconds
+Sleep time : 60 seconds
+```
+
+The script:
+
+1. Cleans old processes.
+2. Recreates `/tmp/in.ts`.
+3. Starts a dummy FIFO writer to prevent EOF.
+4. Starts the GNU Radio DVB-S2 transmitter.
+5. Starts FFmpeg.
+6. Transmits for the configured period.
+7. Stops all related processes.
+8. Waits before starting the next cycle.
+
+---
+
+## FIFO
+
+The MPEG transport stream is passed to GNU Radio through:
+
+```text
+/tmp/in.ts
+```
+
+The dummy writer exists only to prevent FIFO EOF.
+
+It does **not** generate missing TS data and does not compensate for insufficient FFmpeg output.
+
+---
+
+## Camera
+
+The tested camera is:
+
+```text
+Logitech C920
+```
+
+The important point is that the C920 internal H.264 encoder is not used.
+
+The camera is treated simply as a V4L2 video source:
+
+```text
+/dev/video0
+```
+
+Video is captured as:
+
+```text
+YUYV422
+```
+
+and all H.265 encoding is performed by `libx265` on the Raspberry Pi 5 CPU.
+
+---
+
+## Hardware Independence
+
+The basic design intentionally keeps the signal chain simple:
+
+```text
+Camera
+  ->
+FFmpeg
+  ->
+MPEG-TS
+  ->
+FIFO
+  ->
+GNU Radio
+  ->
+SDR
+  ->
+RF
+```
+
+The camera, computer and SDR can potentially be replaced independently.
+
+For example:
+
+```text
+Raspberry Pi
+Orange Pi
+Intel PC
+
+Pluto
+Pluto Plus
+LibreSDR
+```
+
+The hardware may change.
+
+The method can remain.
+
+---
+
+## Notes
+
+This is an experimental configuration.
+
+Results depend on:
+
+- CPU performance
+- camera format
+- FFmpeg version
+- libx265 performance
+- GNU Radio version
+- gr-dvbs2 version
+- SDR hardware
+- RF signal level
+- frequency stability
+- receiver acquisition performance
+
+The bitrate values in this repository are practical experimental values rather than absolute theoretical limits.
+
+Further optimisation is possible.
+
+---
+
+## Current Result
+
+```text
+Raspberry Pi 5
++ Logitech C920 YUYV
++ libx265 software H.265
++ MP2 audio
++ GNU Radio DVB-S2
++ Pluto Plus
++ 125 kS/s
++ QPSK 3/4
+= WORKS
+```
+
+H.265 becomes particularly interesting at these very low symbol rates.
+
+As a programmer, I simply could not resist trying to brute-force H.265 in software on the Raspberry Pi 5. 🙂
+
+---
 
 73,
 
